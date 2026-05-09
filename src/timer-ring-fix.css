@@ -1,0 +1,89 @@
+/* Rueda de avance: aparece rodeando el progreso 1/5 y se rellena correctamente. */
+
+@property --timer-fill {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
+}
+
+.tv-screen:has(.section-timer-ring) .tv-header {
+  position: relative;
+}
+
+.tv-screen:has(.section-timer-ring) .section-progress {
+  position: absolute !important;
+  top: clamp(0.95rem, 2.2vw, 1.75rem) !important;
+  right: clamp(0.95rem, 2.2vw, 1.75rem) !important;
+  z-index: 31 !important;
+  width: clamp(3.35rem, 5.2vw, 4.7rem) !important;
+  height: clamp(3.35rem, 5.2vw, 4.7rem) !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  background: color-mix(in srgb, var(--channel-card, #0f172a) 78%, transparent) !important;
+  color: var(--channel-text, currentColor) !important;
+  font-size: clamp(0.76rem, 1.25vw, 1rem) !important;
+  font-weight: 950 !important;
+  letter-spacing: -0.05em !important;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.22), 0 0.8rem 2.2rem rgb(0 0 0 / 0.28) !important;
+  backdrop-filter: blur(12px);
+}
+
+.tv-screen:has(.section-timer-ring) .section-timer-ring {
+  --timer-size: clamp(4.05rem, 6.3vw, 5.65rem);
+  --timer-thickness: clamp(0.26rem, 0.48vw, 0.42rem);
+  position: absolute !important;
+  top: calc(clamp(0.95rem, 2.2vw, 1.75rem) - ((var(--timer-size) - clamp(3.35rem, 5.2vw, 4.7rem)) / 2)) !important;
+  right: calc(clamp(0.95rem, 2.2vw, 1.75rem) - ((var(--timer-size) - clamp(3.35rem, 5.2vw, 4.7rem)) / 2)) !important;
+  z-index: 30 !important;
+  width: var(--timer-size) !important;
+  height: var(--timer-size) !important;
+  border-radius: 50% !important;
+  color: var(--channel-text, currentColor) !important;
+  opacity: 0.96 !important;
+  background:
+    radial-gradient(circle, transparent 0 calc(50% - var(--timer-thickness)), color-mix(in srgb, var(--channel-text, #fff) 24%, transparent) calc(50% - var(--timer-thickness)) calc(50% - var(--timer-thickness) + 1px), transparent calc(50% - var(--timer-thickness) + 1px)),
+    conic-gradient(currentColor var(--timer-fill), rgb(255 255 255 / 0.20) 0 100%) !important;
+  box-shadow: 0 0.9rem 2.5rem rgb(0 0 0 / 0.26), inset 0 0 0 1px rgb(255 255 255 / 0.10) !important;
+  animation: section-timer-fill var(--timer-duration, 12s) linear both !important;
+  pointer-events: none;
+}
+
+.tv-screen:has(.section-timer-ring) .section-timer-ring::before,
+.tv-screen:has(.section-timer-ring) .section-timer-ring::after {
+  content: none !important;
+}
+
+@keyframes section-timer-fill {
+  from { --timer-fill: 0%; }
+  to { --timer-fill: 100%; }
+}
+
+/* En CNN el progreso con rueda sustituye visualmente al contador flotante previo. */
+.theme-ticker:has(.section-timer-ring) .section-progress {
+  background: #b91c1c !important;
+  color: #fff !important;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.26), 0 0.9rem 2.4rem rgb(185 28 28 / 0.36) !important;
+}
+
+.theme-ticker:has(.section-timer-ring) .section-timer-ring {
+  color: #fff !important;
+  background:
+    radial-gradient(circle, transparent 0 calc(50% - var(--timer-thickness)), rgb(255 255 255 / 0.25) calc(50% - var(--timer-thickness)) calc(50% - var(--timer-thickness) + 1px), transparent calc(50% - var(--timer-thickness) + 1px)),
+    conic-gradient(#fff var(--timer-fill), rgb(255 255 255 / 0.22) 0 100%) !important;
+}
+
+.preview-frame .section-timer-ring {
+  display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-timer-ring {
+    animation: none !important;
+    --timer-fill: 100%;
+  }
+}
