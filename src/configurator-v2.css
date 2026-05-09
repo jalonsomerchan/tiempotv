@@ -1,0 +1,301 @@
+.configurator-v2 .hero-compact {
+  padding-top: clamp(1.4rem, 3vw, 3rem);
+  padding-bottom: 1rem;
+}
+
+.configurator-v2 .hero-copy h1 {
+  font-size: clamp(3.6rem, 11vw, 8rem) !important;
+  max-width: 9ch;
+}
+
+.configurator-v2 .hero-copy h1::after {
+  content: none !important;
+}
+
+.autosave-note {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 0.85rem !important;
+  border-radius: var(--radius-full);
+  padding: 0.35rem 0.7rem;
+  background: var(--color-surface);
+  color: var(--color-text-muted) !important;
+  font-size: 0.85rem !important;
+  font-weight: 800;
+  box-shadow: var(--shadow-xs);
+}
+
+.compact-config {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.compact-config > .panel-heading {
+  margin-bottom: 0;
+}
+
+.config-group {
+  border: 1px solid var(--color-border);
+  border-radius: 1.15rem;
+  background: color-mix(in srgb, var(--color-surface) 88%, transparent);
+  overflow: visible;
+  box-shadow: var(--shadow-xs);
+}
+
+.config-group + .config-group {
+  margin-top: 0;
+}
+
+.config-group summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 4rem;
+  padding: 0.95rem 1rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.config-group summary::-webkit-details-marker {
+  display: none;
+}
+
+.config-group summary::after {
+  content: '+';
+  display: grid;
+  flex: 0 0 auto;
+  width: 1.9rem;
+  height: 1.9rem;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-surface-soft);
+  color: var(--color-text-muted);
+  font-weight: 950;
+  transition: transform var(--transition-base), background var(--transition-base);
+}
+
+.config-group[open] summary::after {
+  content: '−';
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.config-group summary span {
+  color: var(--color-text);
+  font-size: 1.02rem;
+  font-weight: 950;
+  letter-spacing: -0.03em;
+}
+
+.config-group summary small {
+  margin-left: auto;
+  color: var(--color-text-soft);
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-align: right;
+}
+
+.config-group-body {
+  display: grid;
+  gap: 1rem;
+  border-top: 1px solid var(--color-border);
+  padding: 1rem;
+}
+
+.configurator-v2 .form-grid {
+  gap: 0.8rem;
+}
+
+.configurator-v2 .input,
+.configurator-v2 .select,
+.configurator-v2 .textarea {
+  min-height: 2.55rem;
+  border-radius: 0.85rem;
+}
+
+.configurator-v2 .label {
+  margin-bottom: 0.35rem;
+  font-size: 0.9rem;
+}
+
+.configurator-v2 .help-text {
+  font-size: 0.78rem;
+}
+
+.theme-picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+  gap: 0.55rem;
+}
+
+.theme-picker button {
+  display: grid;
+  gap: 0.25rem;
+  min-height: 4.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.95rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+  padding: 0.75rem;
+  text-align: left;
+  transition: transform var(--transition-base), border-color var(--transition-base), background var(--transition-base), box-shadow var(--transition-base);
+}
+
+.theme-picker button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-xs);
+}
+
+.theme-picker button.theme-selected {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+}
+
+.theme-picker strong {
+  font-size: 0.92rem;
+  font-weight: 950;
+}
+
+.theme-picker small {
+  color: var(--color-text-muted);
+  font-size: 0.76rem;
+  line-height: 1.25;
+}
+
+.compact-colors {
+  grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+}
+
+.compact-colors .color-input {
+  min-height: 2.7rem;
+}
+
+.compact-options {
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 0.6rem;
+  margin-top: 0;
+}
+
+.switch-row.slim {
+  align-items: center;
+  min-height: 3.15rem;
+  border-radius: 0.95rem;
+  padding: 0.7rem 0.8rem;
+}
+
+.switch-row.slim strong {
+  font-size: 0.92rem;
+}
+
+.switch-row.slim small {
+  font-size: 0.76rem;
+}
+
+.compact-other {
+  margin-top: 0;
+}
+
+.compact-other .chips {
+  margin-top: 0.55rem;
+}
+
+.section-list {
+  gap: 0.7rem;
+}
+
+.compact-section-row {
+  grid-template-columns: auto 1fr auto;
+  gap: 0.75rem;
+  border-radius: 1rem;
+  padding: 0.85rem;
+}
+
+.compact-section-row + .compact-section-row {
+  margin-top: 0;
+}
+
+.compact-section-row .toggle-label {
+  align-items: center;
+  font-weight: 900;
+}
+
+.section-advanced {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 0.65rem;
+  border-left: 2px solid var(--color-border);
+  padding-left: 0.75rem;
+}
+
+.metric-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.metric-pills label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  background: var(--color-surface-soft);
+  padding: 0.35rem 0.6rem;
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.configurator-v2 .preview-panel {
+  top: 5rem;
+}
+
+.configurator-v2 .preview-panel .panel-heading h2 {
+  font-size: clamp(1.15rem, 2.2vw, 1.55rem);
+}
+
+.configurator-v2 .url-box {
+  margin-top: 0.85rem;
+}
+
+.configurator-v2 .url-textarea {
+  min-height: 5rem;
+}
+
+.configurator-v2 .preview-dots {
+  margin-top: 0.65rem;
+}
+
+.configurator-v2 .preview-dots button {
+  width: 0.62rem;
+  height: 0.62rem;
+}
+
+.configurator-v2 .preview-dots button.active-dot {
+  width: 1.65rem;
+}
+
+@media (min-width: 1120px) {
+  .configurator-v2 .workspace {
+    grid-template-columns: minmax(0, 0.95fr) minmax(27rem, 0.72fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .config-group summary {
+    align-items: flex-start;
+  }
+
+  .config-group summary small {
+    display: none;
+  }
+
+  .compact-section-row {
+    grid-template-columns: auto 1fr;
+  }
+
+  .compact-section-row .row-actions {
+    grid-column: 2;
+  }
+}
