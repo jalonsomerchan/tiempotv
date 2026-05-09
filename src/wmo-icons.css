@@ -1,0 +1,309 @@
+/* Iconos meteorológicos propios basados en códigos WMO. Sin emojis ni fuentes externas. */
+.wmo-icon {
+  position: relative;
+  display: inline-grid;
+  width: 3.35rem;
+  height: 3.35rem;
+  place-items: center;
+  border: 0.16rem solid currentColor;
+  border-radius: 50%;
+  color: currentColor;
+  line-height: 1;
+  isolation: isolate;
+}
+
+.wmo-icon::before,
+.wmo-icon::after {
+  content: '';
+  position: absolute;
+  display: block;
+  box-sizing: border-box;
+}
+
+.wmo-icon-big {
+  width: clamp(6rem, 13vw, 12rem);
+  height: clamp(6rem, 13vw, 12rem);
+  border-width: clamp(0.22rem, 0.45vw, 0.48rem);
+}
+
+.wmo-code-badge {
+  position: absolute;
+  right: -0.35rem;
+  bottom: -0.2rem;
+  min-width: 1.55rem;
+  border: 0.12rem solid currentColor;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--channel-card, #0f172a) 82%, transparent);
+  padding: 0.08rem 0.32rem;
+  color: currentColor;
+  font-size: 0.66rem;
+  font-weight: 950;
+  letter-spacing: -0.04em;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.wmo-icon-big .wmo-code-badge {
+  right: 2%;
+  bottom: 2%;
+  min-width: 2.25rem;
+  padding: 0.15rem 0.45rem;
+  font-size: clamp(0.78rem, 1.5vw, 1.15rem);
+}
+
+.wmo-sun::before {
+  inset: 27%;
+  border: 0.18rem solid currentColor;
+  border-radius: 50%;
+}
+.wmo-sun::after {
+  inset: 10%;
+  border-radius: 50%;
+  background:
+    linear-gradient(currentColor 0 0) 50% 0 / 0.14rem 0.48rem no-repeat,
+    linear-gradient(currentColor 0 0) 50% 100% / 0.14rem 0.48rem no-repeat,
+    linear-gradient(90deg, currentColor 0 0) 0 50% / 0.48rem 0.14rem no-repeat,
+    linear-gradient(90deg, currentColor 0 0) 100% 50% / 0.48rem 0.14rem no-repeat;
+}
+
+.wmo-partly::before {
+  width: 44%;
+  height: 44%;
+  top: 16%;
+  left: 16%;
+  border: 0.16rem solid currentColor;
+  border-radius: 50%;
+}
+.wmo-partly::after,
+.wmo-cloud::before,
+.wmo-drizzle::before,
+.wmo-rain::before,
+.wmo-snow::before,
+.wmo-storm::before {
+  width: 62%;
+  height: 34%;
+  right: 12%;
+  bottom: 24%;
+  border: 0.16rem solid currentColor;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 28% 12%, transparent 0 25%, currentColor 26% 31%, transparent 32%),
+    radial-gradient(circle at 55% 8%, transparent 0 28%, currentColor 29% 34%, transparent 35%);
+}
+
+.wmo-cloud::before { inset: 32% 15% auto auto; }
+
+.wmo-fog::before {
+  left: 17%;
+  right: 17%;
+  top: 31%;
+  height: 0.18rem;
+  border-radius: 99px;
+  background: currentColor;
+  box-shadow: 0 0.55rem 0 currentColor, 0 1.1rem 0 currentColor;
+}
+.wmo-fog::after {
+  left: 27%;
+  right: 27%;
+  bottom: 18%;
+  height: 0.18rem;
+  border-radius: 99px;
+  background: currentColor;
+  opacity: 0.72;
+}
+
+.wmo-drizzle::after,
+.wmo-rain::after {
+  left: 30%;
+  right: 30%;
+  bottom: 12%;
+  height: 0.9rem;
+  background:
+    linear-gradient(115deg, transparent 0 44%, currentColor 45% 57%, transparent 58%) 0 0 / 0.55rem 0.9rem repeat-x;
+}
+.wmo-drizzle::after { opacity: 0.62; transform: scaleY(0.72); }
+
+.wmo-snow::after {
+  left: 22%;
+  right: 22%;
+  bottom: 12%;
+  height: 0.9rem;
+  background:
+    radial-gradient(circle, currentColor 0 18%, transparent 20%) 0 0 / 0.7rem 0.7rem repeat-x;
+}
+
+.wmo-storm::after {
+  left: 42%;
+  bottom: 8%;
+  width: 1.1rem;
+  height: 1.6rem;
+  clip-path: polygon(54% 0, 16% 55%, 48% 55%, 34% 100%, 86% 38%, 55% 38%);
+  background: currentColor;
+}
+
+/* Tamaños integrados con los layouts existentes */
+.big-icon.wmo-big-holder {
+  display: grid;
+  place-items: center;
+  line-height: 1;
+}
+.day-icon .wmo-icon {
+  width: clamp(2.3rem, 5vw, 4.7rem);
+  height: clamp(2.3rem, 5vw, 4.7rem);
+}
+.compact-section .day-icon .wmo-icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-width: 0.1rem;
+}
+.compact-section .wmo-code-badge {
+  display: none;
+}
+
+/* CNN / ticker: previsión de varios días como tabla compacta profesional. */
+.theme-ticker .tv-card {
+  width: min(94vw, 92rem) !important;
+  max-height: min(74vh, 48rem) !important;
+  padding: clamp(0.9rem, 2vw, 1.7rem) !important;
+  overflow: hidden !important;
+}
+.theme-ticker .channel-section {
+  min-height: 0;
+}
+.theme-ticker .forecast-grid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 0 !important;
+  margin-top: clamp(0.65rem, 1.2vw, 1rem) !important;
+  border-top: 0.16rem solid #b91c1c;
+  background: rgb(255 255 255 / 0.86);
+}
+.theme-ticker .forecast-grid article {
+  display: grid !important;
+  grid-template-columns: minmax(8.5rem, 1.05fr) 4.6rem minmax(7rem, 0.9fr) minmax(9rem, 0.9fr) !important;
+  gap: 0.75rem !important;
+  align-items: center !important;
+  min-height: clamp(3rem, 7vh, 4.45rem) !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgb(15 23 42 / 0.16) !important;
+  border-radius: 0 !important;
+  padding: 0.36rem clamp(0.6rem, 1.2vw, 1rem) !important;
+  background: transparent !important;
+  color: #06111f !important;
+}
+.theme-ticker .forecast-grid article::before {
+  content: none !important;
+}
+.theme-ticker .forecast-grid article > strong {
+  grid-column: 1 !important;
+  justify-self: stretch !important;
+  text-align: left !important;
+  color: #06111f;
+  font-size: clamp(1rem, 2.25vw, 2.15rem) !important;
+  line-height: 1 !important;
+  letter-spacing: -0.055em;
+  white-space: nowrap;
+}
+.theme-ticker .forecast-grid .day-icon {
+  grid-column: 2 !important;
+  grid-row: auto !important;
+  justify-self: center !important;
+  display: grid;
+  place-items: center;
+  font-size: unset !important;
+}
+.theme-ticker .forecast-grid .day-icon .wmo-icon {
+  width: clamp(2rem, 4.4vw, 3.8rem);
+  height: clamp(2rem, 4.4vw, 3.8rem);
+  border-width: 0.14rem;
+}
+.theme-ticker .forecast-grid .day-icon .wmo-code-badge {
+  display: none;
+}
+.theme-ticker .forecast-grid small {
+  grid-column: 3 !important;
+  display: block !important;
+  justify-self: start;
+  color: #334155;
+  font-size: clamp(0.78rem, 1.4vw, 1.08rem) !important;
+  font-weight: 850;
+  line-height: 1.05;
+  text-align: left !important;
+  opacity: 1 !important;
+  white-space: normal;
+}
+.theme-ticker .forecast-grid b {
+  grid-column: 4 !important;
+  justify-self: end !important;
+  color: #b91c1c;
+  font-size: clamp(1.25rem, 3vw, 3rem) !important;
+  line-height: 0.95 !important;
+  letter-spacing: -0.065em;
+  white-space: nowrap;
+}
+.theme-ticker .section-kicker {
+  margin-bottom: 0 !important;
+  font-size: clamp(0.72rem, 1vw, 0.9rem);
+}
+.theme-ticker .current-layout .wmo-icon-big {
+  color: #b91c1c;
+}
+.theme-ticker .current-layout h2 {
+  font-size: clamp(4.6rem, 12vw, 11rem) !important;
+}
+.theme-ticker .extremes-grid {
+  grid-template-columns: repeat(auto-fit, minmax(7.6rem, 1fr)) !important;
+  gap: 0.45rem !important;
+}
+.theme-ticker .extremes-grid article {
+  min-height: clamp(5rem, 11vh, 7rem) !important;
+  padding: 0.7rem !important;
+  text-align: center;
+}
+.theme-ticker .extremes-grid article > span {
+  text-align: center !important;
+  font-size: clamp(0.82rem, 1.4vw, 1rem) !important;
+}
+.theme-ticker .extremes-grid strong {
+  justify-self: center !important;
+  font-size: clamp(1.7rem, 3.8vw, 3.4rem) !important;
+}
+.theme-ticker .extremes-grid small {
+  justify-self: center !important;
+  font-size: clamp(1rem, 2.1vw, 1.8rem) !important;
+}
+
+.preview-frame.theme-ticker .forecast-grid article {
+  grid-template-columns: minmax(3.7rem, 1fr) 1.8rem minmax(3.8rem, 1fr) auto !important;
+  gap: 0.32rem !important;
+  min-height: 1.9rem !important;
+  padding: 0.18rem 0.32rem !important;
+}
+.preview-frame.theme-ticker .forecast-grid article > strong {
+  font-size: 0.78rem !important;
+}
+.preview-frame.theme-ticker .forecast-grid .day-icon .wmo-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-width: 0.08rem;
+}
+.preview-frame.theme-ticker .forecast-grid small {
+  display: block !important;
+  font-size: 0.56rem !important;
+  line-height: 1;
+}
+.preview-frame.theme-ticker .forecast-grid b {
+  font-size: 0.86rem !important;
+}
+
+@media (max-width: 720px) {
+  .theme-ticker .forecast-grid article {
+    grid-template-columns: 1fr 3rem auto !important;
+  }
+  .theme-ticker .forecast-grid small {
+    display: none !important;
+  }
+  .theme-ticker .forecast-grid b {
+    grid-column: 3 !important;
+  }
+}
