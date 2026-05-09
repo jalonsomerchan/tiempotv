@@ -5,8 +5,8 @@ import './section-animations.css'
 import './advanced-options.css'
 import './theme-polish.css'
 import './configurator-v2.css'
-import './wmo-icons.css'
-import App from './AppWmo.svelte'
+import './tv-final-polish.css'
+import App from './AppOpenWeather.svelte'
 
 const app = mount(App, {
   target: document.getElementById('app')!,
