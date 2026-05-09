@@ -21,6 +21,18 @@
     | 'other-current'
     | 'other-forecast'
 
+  type ChannelTheme =
+    | 'minimal'
+    | 'lower-left'
+    | 'split'
+    | 'glass'
+    | 'ticker'
+    | 'poster'
+    | 'dashboard'
+    | 'cinema'
+    | 'vertical'
+    | 'cards'
+
   type SectionConfig = {
     id: string
     type: SectionType
@@ -39,6 +51,7 @@
     cardColor: string
     randomImages: boolean
     iconStyle: 'emoji' | 'line' | 'solid'
+    theme: ChannelTheme
     transitionSeconds: number
     sections: SectionConfig[]
     otherLocations: LocationResult[]
@@ -82,6 +95,19 @@
     { id: 'other-forecast', type: 'other-forecast', title: 'Previsión en otros municipios', enabled: false, days: 3 },
   ]
 
+  const themeOptions: { id: ChannelTheme; name: string; description: string }[] = [
+    { id: 'minimal', name: 'Minimal central', description: 'Todo centrado, grande y limpio.' },
+    { id: 'lower-left', name: 'Rótulo inferior izquierda', description: 'Nombre del canal abajo a la izquierda con fondo.' },
+    { id: 'split', name: 'Pantalla partida', description: 'Cabecera lateral y datos en bloque derecho.' },
+    { id: 'glass', name: 'Cristal atmosférico', description: 'Tarjeta flotante translúcida con mucho aire.' },
+    { id: 'ticker', name: 'Canal informativo', description: 'Cabecera compacta y barra inferior tipo TV.' },
+    { id: 'poster', name: 'Póster meteorológico', description: 'Composición vertical potente, muy visual.' },
+    { id: 'dashboard', name: 'Dashboard técnico', description: 'Diseño de panel con tarjetas y datos grandes.' },
+    { id: 'cinema', name: 'Cinemático', description: 'Formato panorámico con datos pegados al borde.' },
+    { id: 'vertical', name: 'Vertical social', description: 'Pensado para pantallas verticales o stories.' },
+    { id: 'cards', name: 'Mosaico de tarjetas', description: 'Secciones encajadas en un panel tipo grid.' },
+  ]
+
   const defaultConfig: ChannelConfig = {
     channelName: 'TiempoTV Cáceres',
     location: {
@@ -97,6 +123,7 @@
     cardColor: 'rgba(15, 23, 42, 0.72)',
     randomImages: true,
     iconStyle: 'emoji',
+    theme: 'lower-left',
     transitionSeconds: 12,
     sections: structuredClone(defaultSections),
     otherLocations: [
@@ -110,6 +137,8 @@
     'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1800&q=80',
     'https://images.unsplash.com/photo-1499346030926-9a72daac6c63?auto=format&fit=crop&w=1800&q=80',
     'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1800&q=80',
+    'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1800&q=80',
+    'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1800&q=80',
   ]
 
   const metricOptions = [
@@ -137,8 +166,10 @@
   let searchTimer: number | undefined
   let otherSearchTimer: number | undefined
   let sectionTimer: number | undefined
+  let draggedSectionId = ''
 
   $: enabledSections = config.sections.filter((section) => section.enabled)
+  $: if (enabledSections.length && activeSectionIndex >= enabledSections.length) activeSectionIndex = 0
   $: activeSection = enabledSections[activeSectionIndex] ?? enabledSections[0]
   $: channelStyle = `--channel-bg:${config.backgroundColor}; --channel-text:${config.textColor}; --channel-card:${config.cardColor}; --channel-image:url('${backgroundImages[activeSectionIndex % backgroundImages.length]}')`
   $: generatedUrl = buildChannelUrl(config)
@@ -175,8 +206,13 @@
     try {
       const normalized = value.replaceAll('-', '+').replaceAll('_', '/')
       const padded = normalized + '='.repeat((4 - (normalized.length % 4)) % 4)
-      const parsed = JSON.parse(decodeURIComponent(escape(atob(padded)))) as ChannelConfig
-      return { ...structuredClone(defaultConfig), ...parsed, sections: parsed.sections?.length ? parsed.sections : structuredClone(defaultSections) }
+      const parsed = JSON.parse(decodeURIComponent(escape(atob(padded)))) as Partial<ChannelConfig>
+      return {
+        ...structuredClone(defaultConfig),
+        ...parsed,
+        theme: parsed.theme ?? 'lower-left',
+        sections: parsed.sections?.length ? parsed.sections : structuredClone(defaultSections),
+      }
     } catch {
       return null
     }
@@ -312,13 +348,16 @@
   function startAutoRotation() {
     window.clearInterval(sectionTimer)
     sectionTimer = window.setInterval(() => {
-      if (enabledSections.length > 1) {
-        activeSectionIndex = (activeSectionIndex + 1) % enabledSections.length
-      }
+      if (enabledSections.length > 1) activeSectionIndex = (activeSectionIndex + 1) % enabledSections.length
     }, Math.max(4, config.transitionSeconds) * 1000)
   }
 
   function updateTransition() {
+    startAutoRotation()
+  }
+
+  function goToPreviewSection(index: number) {
+    activeSectionIndex = index
     startAutoRotation()
   }
 
@@ -329,6 +368,30 @@
     const [item] = sections.splice(index, 1)
     sections.splice(nextIndex, 0, item)
     config.sections = sections
+    activeSectionIndex = 0
+  }
+
+  function onSectionDragStart(event: DragEvent, sectionId: string) {
+    draggedSectionId = sectionId
+    event.dataTransfer?.setData('text/plain', sectionId)
+    if (event.dataTransfer) event.dataTransfer.effectAllowed = 'move'
+  }
+
+  function onSectionDrop(event: DragEvent, targetSectionId: string) {
+    event.preventDefault()
+    const sourceId = event.dataTransfer?.getData('text/plain') || draggedSectionId
+    if (!sourceId || sourceId === targetSectionId) return
+
+    const sections = [...config.sections]
+    const sourceIndex = sections.findIndex((section) => section.id === sourceId)
+    const targetIndex = sections.findIndex((section) => section.id === targetSectionId)
+    if (sourceIndex < 0 || targetIndex < 0) return
+
+    const [section] = sections.splice(sourceIndex, 1)
+    sections.splice(targetIndex, 0, section)
+    config.sections = sections
+    activeSectionIndex = 0
+    draggedSectionId = ''
   }
 
   function toggleSection(section: SectionConfig) {
@@ -390,11 +453,11 @@
 </script>
 
 {#if viewMode === 'channel'}
-  <main class="tv-screen" style={channelStyle} aria-live="polite">
+  <main class={`tv-screen theme-${config.theme}`} style={channelStyle} aria-live="polite">
     <div class:with-image={config.randomImages} class="tv-background"></div>
     <div class="tv-overlay">
       <header class="tv-header">
-        <div>
+        <div class="tv-title-box">
           <p class="eyebrow">{config.location?.name ?? 'Tiempo local'}</p>
           <h1>{config.channelName}</h1>
         </div>
@@ -415,6 +478,7 @@
         <span>Datos: Open-Meteo</span>
         <span>{lastUpdated ? `Actualizado: ${lastUpdated}` : ''}</span>
       </footer>
+      <div class="generated-by">Generado por tiempotv.alon.one</div>
     </div>
   </main>
 {:else}
@@ -445,7 +509,7 @@
             <button class="btn btn-secondary" type="button" on:click={openChannel}>Abrir emisión</button>
           </div>
         </div>
-        <div class="mini-tv" style={channelStyle}>
+        <div class={`mini-tv theme-${config.theme}`} style={channelStyle}>
           <div class="mini-tv-card">
             <span>{weatherIcon(weather?.current.code ?? 1)}</span>
             <strong>{weather?.current.temperature ?? 22}°</strong>
@@ -477,6 +541,16 @@
                   {/each}
                 </ul>
               {/if}
+            </label>
+
+            <label>
+              <span class="label">Theme del canal</span>
+              <select class="select" bind:value={config.theme}>
+                {#each themeOptions as theme}
+                  <option value={theme.id}>{theme.name}</option>
+                {/each}
+              </select>
+              <span class="help-text">Cambia composición, tamaños, posición de cabecera y estilo visual.</span>
             </label>
 
             <label>
@@ -518,14 +592,33 @@
             </label>
           </div>
 
+          <div class="theme-gallery" aria-label="Themes disponibles">
+            {#each themeOptions as theme}
+              <button class:theme-selected={config.theme === theme.id} type="button" on:click={() => (config.theme = theme.id)}>
+                <span>{theme.name}</span>
+                <small>{theme.description}</small>
+              </button>
+            {/each}
+          </div>
+
           <div class="section-editor">
             <div class="panel-heading compact">
               <p class="eyebrow">Secciones</p>
               <h2>Orden y contenido</h2>
+              <p class="help-text">Arrastra cada bloque para cambiar el orden o usa las flechas.</p>
             </div>
 
             {#each config.sections as section, index (section.id)}
-              <article class="section-row">
+              <article
+                class:dragging={draggedSectionId === section.id}
+                class="section-row"
+                draggable="true"
+                on:dragstart={(event) => onSectionDragStart(event, section.id)}
+                on:dragover|preventDefault
+                on:drop={(event) => onSectionDrop(event, section.id)}
+                on:dragend={() => (draggedSectionId = '')}
+              >
+                <div class="drag-handle" aria-hidden="true">⋮⋮</div>
                 <div class="section-main">
                   <label class="toggle-label">
                     <input type="checkbox" checked={section.enabled} on:change={() => toggleSection(section)} />
@@ -584,11 +677,14 @@
           <div class="panel-heading">
             <p class="eyebrow">Vista previa</p>
             <h2>Así se verá en pantalla</h2>
+            {#if activeSection}
+              <p class="help-text">Sección {activeSectionIndex + 1} de {enabledSections.length}: {activeSection.title}</p>
+            {/if}
           </div>
-          <div class="preview-frame" style={channelStyle}>
+          <div class={`preview-frame theme-${config.theme}`} style={channelStyle}>
             <div class:with-image={config.randomImages} class="tv-background"></div>
             <div class="preview-content">
-              <header>
+              <header class="preview-title-box">
                 <span>{config.location?.name}</span>
                 <strong>{config.channelName}</strong>
               </header>
@@ -599,8 +695,23 @@
                   <p>Cargando previsualización…</p>
                 {/if}
               </div>
+              <div class="preview-generated">Generado por tiempotv.alon.one</div>
             </div>
           </div>
+
+          {#if enabledSections.length}
+            <div class="preview-dots" aria-label="Cambiar sección de la vista previa">
+              {#each enabledSections as section, index}
+                <button
+                  class:active-dot={index === activeSectionIndex}
+                  type="button"
+                  title={section.title}
+                  aria-label={`Ver sección ${index + 1}: ${section.title}`}
+                  on:click={() => goToPreviewSection(index)}
+                ></button>
+              {/each}
+            </div>
+          {/if}
 
           <div class="url-box" id="url">
             <label>
@@ -621,12 +732,12 @@
 
 {#snippet ChannelSection(activeSection: SectionConfig, weather: WeatherBundle, config: ChannelConfig, otherWeather: Map<string, WeatherBundle>, compact = false)}
   <div class:compact-section={compact} class="channel-section">
-    <p class="eyebrow">{activeSection.title}</p>
+    <p class="eyebrow section-kicker">{activeSection.title}</p>
 
     {#if activeSection.type === 'current'}
       <div class="current-layout">
         <div class="big-icon">{weatherIcon(weather.current.code)}</div>
-        <div>
+        <div class="current-copy">
           <h2>{weather.current.temperature}°C</h2>
           <p>{weatherLabel(weather.current.code)}</p>
           <div class="weather-stats">
