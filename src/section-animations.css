@@ -1,0 +1,427 @@
+/*
+  Animaciones profesionales para las secciones del canal.
+  Se aplican sobre la tarjeta activa y sus elementos internos. La animación base
+  incluye entrada, mantenimiento y salida suave para que el cambio automático
+  entre secciones no sea brusco.
+*/
+
+.tv-screen {
+  --section-cycle: 12s;
+  --section-enter: 720ms;
+  --section-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --section-exit-ease: cubic-bezier(0.55, 0, 1, 0.45);
+}
+
+.tv-card.tv-content,
+.preview-card {
+  transform-origin: center;
+  will-change: transform, opacity, filter, clip-path;
+}
+
+.tv-screen .tv-card.tv-content {
+  animation: section-cycle-fade var(--section-cycle) linear both infinite;
+}
+
+.preview-frame .preview-card {
+  animation: preview-section-enter 520ms var(--section-ease) both;
+}
+
+.tv-card .section-kicker,
+.preview-card .section-kicker,
+.tv-card .big-icon,
+.preview-card .big-icon,
+.tv-card .current-copy,
+.preview-card .current-copy,
+.tv-card .forecast-grid article,
+.preview-card .forecast-grid article,
+.tv-card .extremes-grid article,
+.preview-card .extremes-grid article,
+.tv-card .interest-grid article,
+.preview-card .interest-grid article,
+.tv-card .other-grid article,
+.preview-card .other-grid article,
+.tv-card .message-block,
+.preview-card .message-block {
+  will-change: transform, opacity, filter;
+}
+
+.tv-screen .tv-card .section-kicker,
+.preview-frame .preview-card .section-kicker {
+  animation: detail-rise 680ms var(--section-ease) 100ms both;
+}
+
+.tv-screen .tv-card .big-icon,
+.preview-frame .preview-card .big-icon {
+  animation: icon-pop 900ms var(--section-ease) 120ms both;
+}
+
+.tv-screen .tv-card .current-copy,
+.preview-frame .preview-card .current-copy {
+  animation: detail-rise 760ms var(--section-ease) 220ms both;
+}
+
+.tv-screen .tv-card .forecast-grid article,
+.tv-screen .tv-card .extremes-grid article,
+.tv-screen .tv-card .interest-grid article,
+.tv-screen .tv-card .other-grid article,
+.tv-screen .tv-card .other-forecast-grid article,
+.preview-frame .preview-card .forecast-grid article,
+.preview-frame .preview-card .extremes-grid article,
+.preview-frame .preview-card .interest-grid article,
+.preview-frame .preview-card .other-grid article,
+.preview-frame .preview-card .other-forecast-grid article {
+  animation: card-stagger-in 700ms var(--section-ease) both;
+}
+
+.tv-card article:nth-child(1),
+.preview-card article:nth-child(1) { animation-delay: 90ms; }
+.tv-card article:nth-child(2),
+.preview-card article:nth-child(2) { animation-delay: 150ms; }
+.tv-card article:nth-child(3),
+.preview-card article:nth-child(3) { animation-delay: 210ms; }
+.tv-card article:nth-child(4),
+.preview-card article:nth-child(4) { animation-delay: 270ms; }
+.tv-card article:nth-child(5),
+.preview-card article:nth-child(5) { animation-delay: 330ms; }
+.tv-card article:nth-child(6),
+.preview-card article:nth-child(6) { animation-delay: 390ms; }
+.tv-card article:nth-child(7),
+.preview-card article:nth-child(7) { animation-delay: 450ms; }
+.tv-card article:nth-child(8),
+.preview-card article:nth-child(8) { animation-delay: 510ms; }
+
+.tv-screen .tv-card .message-block,
+.preview-frame .preview-card .message-block {
+  animation: message-focus 900ms var(--section-ease) 160ms both;
+}
+
+/* Base elegante: entra, se mantiene y sale al final del ciclo. */
+@keyframes section-cycle-fade {
+  0% {
+    opacity: 0;
+    transform: translateY(2.2rem) scale(0.985);
+    filter: blur(10px);
+  }
+  5%, 88% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-1.6rem) scale(0.99);
+    filter: blur(8px);
+  }
+}
+
+@keyframes preview-section-enter {
+  from {
+    opacity: 0;
+    transform: translateY(0.8rem) scale(0.985);
+    filter: blur(7px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes detail-rise {
+  from {
+    opacity: 0;
+    transform: translateY(1.15rem);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes icon-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.76) rotate(-5deg);
+    filter: blur(8px);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.04) rotate(1deg);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    filter: blur(0);
+  }
+}
+
+@keyframes card-stagger-in {
+  from {
+    opacity: 0;
+    transform: translateY(1.2rem) scale(0.96);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes message-focus {
+  from {
+    opacity: 0;
+    transform: translateY(1.4rem) scale(0.98);
+    letter-spacing: -0.09em;
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Minimal: fade premium con respiración muy sutil. */
+.theme-minimal .tv-card.tv-content {
+  animation-name: minimal-cycle;
+}
+.theme-minimal .big-icon {
+  animation-name: minimal-icon, icon-pop;
+  animation-duration: 5.6s, 900ms;
+  animation-timing-function: ease-in-out, var(--section-ease);
+  animation-iteration-count: infinite, 1;
+}
+@keyframes minimal-cycle {
+  0% { opacity: 0; transform: translateY(1.4rem) scale(0.98); filter: blur(12px); }
+  6%, 88% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+  100% { opacity: 0; transform: translateY(-1rem) scale(1.01); filter: blur(10px); }
+}
+@keyframes minimal-icon {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-0.35rem) scale(1.018); }
+}
+
+/* Lower-left: entrada lateral tipo rótulo magazine. */
+.theme-lower-left .tv-card.tv-content {
+  animation-name: lower-left-cycle;
+}
+.theme-lower-left .tv-title-box {
+  animation: lower-third-in 760ms var(--section-ease) both;
+}
+@keyframes lower-left-cycle {
+  0% { opacity: 0; transform: translateX(3rem); clip-path: inset(0 0 0 18%); filter: blur(6px); }
+  7%, 88% { opacity: 1; transform: translateX(0); clip-path: inset(0); filter: blur(0); }
+  100% { opacity: 0; transform: translateX(-2rem); clip-path: inset(0 20% 0 0); filter: blur(6px); }
+}
+@keyframes lower-third-in {
+  from { opacity: 0; transform: translateX(-2rem); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Split: cortinilla lateral de informativo. */
+.theme-split .tv-card.tv-content {
+  animation-name: split-wipe-cycle;
+}
+.theme-split .tv-header {
+  animation: panel-lock-in 850ms var(--section-ease) both;
+}
+@keyframes split-wipe-cycle {
+  0% { opacity: 0; transform: translateX(2rem); clip-path: inset(0 0 0 100%); }
+  7%, 88% { opacity: 1; transform: translateX(0); clip-path: inset(0); }
+  100% { opacity: 0; transform: translateX(-1.5rem); clip-path: inset(0 100% 0 0); }
+}
+@keyframes panel-lock-in {
+  from { transform: translateX(-1.6rem); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* Glass: zoom cristalino con blur. */
+.theme-glass .tv-card.tv-content {
+  animation-name: glass-cycle;
+}
+.theme-glass .forecast-grid article,
+.theme-glass .extremes-grid article,
+.theme-glass .interest-grid article,
+.theme-glass .other-grid article {
+  animation-name: glass-card-in;
+}
+@keyframes glass-cycle {
+  0% { opacity: 0; transform: scale(0.94) translateY(1rem); filter: blur(18px) saturate(1.4); }
+  8%, 87% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0) saturate(1); }
+  100% { opacity: 0; transform: scale(1.025) translateY(-0.8rem); filter: blur(16px) saturate(1.2); }
+}
+@keyframes glass-card-in {
+  from { opacity: 0; transform: translateY(1rem) scale(0.92); backdrop-filter: blur(0); }
+  to { opacity: 1; transform: translateY(0) scale(1); backdrop-filter: blur(18px); }
+}
+
+/* Ticker/CNN: barrido horizontal + líneas de tabla. */
+.theme-ticker .tv-card.tv-content {
+  animation-name: ticker-cycle;
+}
+.theme-ticker .forecast-grid article,
+.theme-ticker .extremes-grid article,
+.theme-ticker .other-grid article,
+.theme-ticker .interest-grid article {
+  animation-name: ticker-row-in;
+  transform-origin: left center;
+}
+.theme-ticker .tv-footer {
+  animation: ticker-bar-in 780ms var(--section-ease) both;
+}
+@keyframes ticker-cycle {
+  0% { opacity: 0; transform: translateX(3rem); clip-path: inset(0 0 0 100%); }
+  6%, 90% { opacity: 1; transform: translateX(0); clip-path: inset(0); }
+  100% { opacity: 0; transform: translateX(-2rem); clip-path: inset(0 100% 0 0); }
+}
+@keyframes ticker-row-in {
+  from { opacity: 0; transform: translateX(-2rem) scaleX(0.98); }
+  to { opacity: 1; transform: translateX(0) scaleX(1); }
+}
+@keyframes ticker-bar-in {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+/* Poster: impacto editorial desde abajo. */
+.theme-poster .tv-card.tv-content {
+  animation-name: poster-cycle;
+}
+.theme-poster .current-layout h2,
+.theme-poster .message-block p {
+  animation: poster-type-in 900ms cubic-bezier(0.16, 1, 0.3, 1) 140ms both;
+}
+@keyframes poster-cycle {
+  0% { opacity: 0; transform: translateY(4rem) scale(0.96); filter: blur(10px); }
+  8%, 88% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+  100% { opacity: 0; transform: translateY(-3rem) scale(1.02); filter: blur(8px); }
+}
+@keyframes poster-type-in {
+  from { opacity: 0; transform: translateY(2rem) scaleY(0.92); }
+  to { opacity: 1; transform: translateY(0) scaleY(1); }
+}
+
+/* Dashboard/Weather TV: cards que suben y barra que respira. */
+.theme-dashboard .tv-card.tv-content {
+  animation-name: dashboard-cycle;
+}
+.theme-dashboard .forecast-grid article,
+.theme-dashboard .extremes-grid article,
+.theme-dashboard .interest-grid article,
+.theme-dashboard .other-grid article,
+.theme-dashboard .weather-stats span {
+  animation-name: dashboard-tile-in;
+}
+.theme-dashboard .tv-header {
+  animation: dashboard-header-in 620ms var(--section-ease) both;
+}
+@keyframes dashboard-cycle {
+  0% { opacity: 0; transform: translateY(1.6rem); filter: saturate(1.8) blur(8px); }
+  5%, 90% { opacity: 1; transform: translateY(0); filter: saturate(1) blur(0); }
+  100% { opacity: 0; transform: translateY(-1.4rem); filter: saturate(1.6) blur(8px); }
+}
+@keyframes dashboard-tile-in {
+  from { opacity: 0; transform: translateY(1.8rem) rotateX(12deg); }
+  to { opacity: 1; transform: translateY(0) rotateX(0); }
+}
+@keyframes dashboard-header-in {
+  from { opacity: 0; transform: translateY(-100%); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Cinema: zoom de cámara y fundido. */
+.theme-cinema .tv-card.tv-content {
+  animation-name: cinema-cycle;
+}
+.theme-cinema .tv-background.with-image {
+  animation: cinema-bg 18s ease-in-out infinite alternate;
+}
+@keyframes cinema-cycle {
+  0% { opacity: 0; transform: translateY(2rem) scale(1.04); filter: blur(12px); }
+  9%, 88% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+  100% { opacity: 0; transform: translateY(1.2rem) scale(0.98); filter: blur(10px); }
+}
+@keyframes cinema-bg {
+  from { transform: scale(1); }
+  to { transform: scale(1.055); }
+}
+
+/* Vertical: movimiento social, rápido y elástico. */
+.theme-vertical .tv-card.tv-content {
+  animation-name: vertical-cycle;
+}
+.theme-vertical .forecast-grid article,
+.theme-vertical .extremes-grid article,
+.theme-vertical .interest-grid article,
+.theme-vertical .other-grid article {
+  animation-name: vertical-pop-in;
+}
+@keyframes vertical-cycle {
+  0% { opacity: 0; transform: translateY(3rem) scale(0.92); border-radius: 3rem; }
+  7%, 88% { opacity: 1; transform: translateY(0) scale(1); border-radius: 2rem; }
+  100% { opacity: 0; transform: translateY(-2rem) scale(0.96); border-radius: 3rem; }
+}
+@keyframes vertical-pop-in {
+  0% { opacity: 0; transform: translateY(1.6rem) scale(0.84); }
+  74% { opacity: 1; transform: translateY(-0.18rem) scale(1.03); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Cards: panel público con flip muy sutil. */
+.theme-cards .tv-card.tv-content {
+  animation-name: cards-cycle;
+  perspective: 1200px;
+}
+.theme-cards .forecast-grid article,
+.theme-cards .extremes-grid article,
+.theme-cards .interest-grid article,
+.theme-cards .other-grid article {
+  animation-name: cards-flip-in;
+  transform-origin: top center;
+}
+@keyframes cards-cycle {
+  0% { opacity: 0; transform: translateY(1rem); }
+  5%, 90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-1rem); }
+}
+@keyframes cards-flip-in {
+  from { opacity: 0; transform: rotateX(-18deg) translateY(1rem); }
+  to { opacity: 1; transform: rotateX(0) translateY(0); }
+}
+
+/* Indicador de sección en preview: pequeño pulso profesional. */
+.preview-dots button.active-dot {
+  animation: dot-pulse 1.8s ease-in-out infinite;
+}
+@keyframes dot-pulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgb(37 99 235 / 0.34); }
+  50% { transform: scale(1.08); box-shadow: 0 0 0 0.35rem rgb(37 99 235 / 0); }
+}
+
+/* La previsualización debe ser rápida y no quedarse saliendo. */
+.preview-frame .preview-card,
+.preview-frame .preview-card article,
+.preview-frame .preview-card .big-icon,
+.preview-frame .preview-card .current-copy,
+.preview-frame .preview-card .message-block {
+  animation-duration: 520ms !important;
+  animation-iteration-count: 1 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tv-card.tv-content,
+  .preview-card,
+  .tv-card *,
+  .preview-card *,
+  .tv-background,
+  .preview-dots button.active-dot {
+    animation: none !important;
+    transform: none !important;
+    filter: none !important;
+    clip-path: none !important;
+  }
+}
