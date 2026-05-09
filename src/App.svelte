@@ -499,7 +499,7 @@
       <section class="hero-section">
         <div class="hero-copy">
           <p class="badge">Canales meteorológicos automáticos</p>
-          <h1>Generador de canales de televisión del tiempo</h1>
+          <h1>TiempoTV</h1>
           <p>
             Configura un canal minimalista para mostrar el tiempo de un municipio en una televisión,
             pantalla informativa o emisión grabada. Los datos se cargan desde Open-Meteo.
