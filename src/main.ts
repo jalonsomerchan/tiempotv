@@ -3,7 +3,7 @@ import './app.css'
 import './theme-radical.css'
 import './section-animations.css'
 import './advanced-options.css'
-import App from './AppAdvanced.svelte'
+import App from './AppAdvanced2.svelte'
 
 const app = mount(App, {
   target: document.getElementById('app')!,
