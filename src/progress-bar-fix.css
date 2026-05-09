@@ -1,0 +1,92 @@
+/* Sustituye la antigua rueda por una barra discreta bajo el progreso 1/5. */
+
+.tv-screen .section-timer-ring {
+  all: unset;
+  --bar-width: clamp(4.8rem, 7.5vw, 7.25rem);
+  --bar-height: clamp(0.18rem, 0.32vw, 0.28rem);
+  position: absolute !important;
+  z-index: 32 !important;
+  width: var(--bar-width) !important;
+  height: var(--bar-height) !important;
+  border-radius: 999px !important;
+  background: rgb(255 255 255 / 0.24) !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+  box-shadow: 0 0.5rem 1.4rem rgb(0 0 0 / 0.22) !important;
+}
+
+.tv-screen .section-timer-ring::before {
+  content: '' !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: inherit !important;
+  background: currentColor !important;
+  transform-origin: left center !important;
+  transform: scaleX(0) !important;
+  animation: section-progress-bar var(--timer-duration, 12s) linear both !important;
+}
+
+.tv-screen .section-timer-ring::after {
+  content: none !important;
+}
+
+@keyframes section-progress-bar {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* Ubicación por defecto: justo debajo del 1/5. */
+.tv-screen:has(.section-timer-ring) .section-progress {
+  position: relative !important;
+  z-index: 34 !important;
+}
+
+.tv-screen:has(.section-timer-ring) .section-progress + .section-timer-ring,
+.tv-screen .section-timer-ring {
+  top: calc(clamp(1rem, 2.4vw, 2rem) + clamp(2.35rem, 3.4vw, 3.05rem) + 0.42rem) !important;
+  right: clamp(1rem, 2.4vw, 2rem) !important;
+}
+
+/* En layouts donde el header no deja el progreso a la derecha, mantenemos la barra discreta arriba derecha. */
+.name-corner .section-timer-ring,
+.theme-lower-left .section-timer-ring,
+.theme-vertical .section-timer-ring {
+  top: calc(clamp(1rem, 2.4vw, 2rem) + 3.05rem) !important;
+  right: clamp(1rem, 2.4vw, 2rem) !important;
+}
+
+/* CNN: barra roja/blanca bajo la píldora 1/5, sin círculo ni fondo raro. */
+.theme-ticker .section-timer-ring {
+  color: #fff !important;
+  background: rgb(255 255 255 / 0.28) !important;
+  box-shadow: 0 0.45rem 1.15rem rgb(185 28 28 / 0.28) !important;
+}
+
+.theme-ticker:has(.section-timer-ring) .section-progress {
+  background: #b91c1c !important;
+  color: #fff !important;
+}
+
+/* Si el usuario oculta el progreso 1/5, la barra sigue siendo discreta y no invade. */
+.tv-screen:not(:has(.section-progress)) .section-timer-ring {
+  top: clamp(1rem, 2.4vw, 2rem) !important;
+}
+
+.preview-frame .section-timer-ring {
+  display: none !important;
+}
+
+@media (max-width: 720px) {
+  .tv-screen .section-timer-ring {
+    --bar-width: 4.5rem;
+    --bar-height: 0.2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tv-screen .section-timer-ring::before {
+    animation: none !important;
+    transform: scaleX(1) !important;
+  }
+}
