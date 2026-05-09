@@ -1,9 +1,9 @@
 import { defineConfig } from 'vite'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 
-// GitHub Pages sirve este repositorio público en /tiempotv/.
-// Si algún día se usa dominio personalizado, cambia base a '/'.
+// Dominio personalizado en GitHub Pages: https://tiempotv.alon.one/
+// Con base '/', Vite genera assets como /assets/... en vez de /tiempotv/assets/...
 export default defineConfig({
-  base: '/tiempotv/',
+  base: '/',
   plugins: [svelte()],
 })
