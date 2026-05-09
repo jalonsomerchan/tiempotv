@@ -1,0 +1,348 @@
+/* Pulido final de themes: ajuste fino de grids, tablas y titulares. */
+
+/* Titular del configurador */
+.hero-copy h1 {
+  font-size: 0 !important;
+  max-width: 9ch;
+}
+.hero-copy h1::after {
+  content: 'TiempoTV';
+  display: block;
+  color: var(--color-text);
+  font-size: clamp(3.4rem, 10vw, 7.8rem);
+  line-height: 0.9;
+  letter-spacing: -0.08em;
+}
+
+/* Base de seguridad: evitar desbordes en cualquier theme */
+.tv-card,
+.preview-card,
+.channel-section {
+  min-width: 0;
+  overflow: hidden;
+}
+.forecast-grid article,
+.extremes-grid article,
+.interest-grid article,
+.other-grid article,
+.other-forecast-grid article {
+  min-width: 0;
+  overflow: hidden;
+}
+.forecast-grid strong,
+.extremes-grid strong,
+.interest-grid strong,
+.other-grid strong,
+.forecast-grid b,
+.forecast-grid small,
+.extremes-grid small,
+.other-grid small {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.day-icon {
+  line-height: 1;
+}
+
+/* CNN / ticker: convertir previsión y máximas en tabla televisiva real */
+.theme-ticker .tv-card {
+  width: min(92vw, 86rem) !important;
+  max-height: min(70vh, 46rem);
+  padding: clamp(1rem, 2.8vw, 2.4rem) !important;
+  overflow: auto;
+}
+.theme-ticker .channel-section {
+  display: grid;
+  align-content: center;
+}
+.theme-ticker .forecast-grid,
+.theme-ticker .extremes-grid,
+.theme-ticker .other-grid,
+.theme-ticker .interest-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin-top: clamp(0.75rem, 2vw, 1.5rem);
+  border-top: 1px solid rgb(15 23 42 / 0.18);
+}
+.theme-ticker .forecast-grid article,
+.theme-ticker .extremes-grid article,
+.theme-ticker .other-grid article,
+.theme-ticker .interest-grid article {
+  display: grid;
+  grid-template-columns: minmax(12rem, 1.35fr) minmax(4.5rem, 0.45fr) minmax(10rem, 0.8fr);
+  align-items: center;
+  gap: clamp(0.7rem, 1.5vw, 1.25rem);
+  min-height: clamp(3.9rem, 8vh, 5.6rem);
+  border: 0;
+  border-bottom: 1px solid rgb(15 23 42 / 0.16);
+  border-radius: 0;
+  padding: clamp(0.55rem, 1.4vw, 1rem) clamp(0.75rem, 2vw, 1.35rem);
+  background: rgb(255 255 255 / 0.72);
+  color: #06111f;
+}
+.theme-ticker .forecast-grid article::before,
+.theme-ticker .extremes-grid article::before,
+.theme-ticker .other-grid article::before,
+.theme-ticker .interest-grid article::before {
+  content: '';
+  width: 0.32rem;
+  align-self: stretch;
+  background: #b91c1c;
+  grid-column: 1;
+  grid-row: 1 / 5;
+  margin-left: -0.75rem;
+}
+.theme-ticker .forecast-grid article > strong,
+.theme-ticker .extremes-grid article > span,
+.theme-ticker .other-grid article > span,
+.theme-ticker .interest-grid article > span {
+  grid-column: 1;
+  font-size: clamp(1.55rem, 3.2vw, 3rem) !important;
+  font-weight: 950;
+  letter-spacing: -0.055em;
+  text-align: right;
+  white-space: normal;
+}
+.theme-ticker .forecast-grid .day-icon {
+  grid-column: 2;
+  grid-row: 1 / 4;
+  justify-self: center;
+  font-size: clamp(2rem, 4.2vw, 4rem) !important;
+}
+.theme-ticker .forecast-grid small {
+  grid-column: 1;
+  font-size: clamp(0.8rem, 1.3vw, 1rem);
+  text-align: right;
+  opacity: 0.72;
+}
+.theme-ticker .forecast-grid b,
+.theme-ticker .extremes-grid strong,
+.theme-ticker .other-grid strong,
+.theme-ticker .interest-grid strong {
+  grid-column: 3;
+  justify-self: start;
+  font-size: clamp(2rem, 4.6vw, 4.4rem) !important;
+  line-height: 0.95;
+  letter-spacing: -0.065em;
+  white-space: nowrap;
+}
+.theme-ticker .extremes-grid small,
+.theme-ticker .other-grid small {
+  grid-column: 3;
+  justify-self: start;
+  font-size: clamp(1.35rem, 3.2vw, 3.2rem);
+  line-height: 1;
+  opacity: 0.78;
+}
+.theme-ticker .current-layout {
+  grid-template-columns: minmax(8rem, 0.6fr) minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2.5rem);
+}
+.theme-ticker .current-layout h2 {
+  font-size: clamp(4.4rem, 12vw, 12rem) !important;
+}
+.theme-ticker .big-icon {
+  font-size: clamp(4.5rem, 10vw, 10rem) !important;
+}
+.theme-ticker .message-block p {
+  font-size: clamp(2.5rem, 6vw, 6rem);
+}
+
+/* Weather TV azul: tarjetas cuadradas y legibles */
+.theme-dashboard .tv-card {
+  overflow: auto;
+}
+.theme-dashboard .forecast-grid,
+.theme-dashboard .extremes-grid,
+.theme-dashboard .interest-grid,
+.theme-dashboard .other-grid {
+  grid-template-columns: repeat(auto-fit, minmax(clamp(9rem, 17vw, 14rem), 1fr));
+  align-items: stretch;
+}
+.theme-dashboard .forecast-grid article,
+.theme-dashboard .extremes-grid article,
+.theme-dashboard .interest-grid article,
+.theme-dashboard .other-grid article {
+  min-height: clamp(8.5rem, 18vh, 13rem);
+  align-content: center;
+  text-align: center;
+}
+.theme-dashboard .forecast-grid strong,
+.theme-dashboard .extremes-grid strong,
+.theme-dashboard .interest-grid strong,
+.theme-dashboard .other-grid strong {
+  font-size: clamp(1.65rem, 4vw, 3.4rem) !important;
+}
+.theme-dashboard .day-icon {
+  font-size: clamp(2.2rem, 5vw, 4.5rem) !important;
+}
+
+/* Cards / panel público: mantener mosaico limpio */
+.theme-cards .forecast-grid,
+.theme-cards .extremes-grid,
+.theme-cards .interest-grid,
+.theme-cards .other-grid {
+  grid-template-columns: repeat(auto-fit, minmax(clamp(10rem, 18vw, 15rem), 1fr));
+}
+.theme-cards .forecast-grid article,
+.theme-cards .extremes-grid article,
+.theme-cards .interest-grid article,
+.theme-cards .other-grid article {
+  min-height: clamp(8rem, 18vh, 12rem);
+  padding: clamp(0.85rem, 1.8vw, 1.3rem);
+}
+
+/* Split: impedir que tablas largas rompan la columna */
+.theme-split .tv-card {
+  max-height: calc(100vh - clamp(4rem, 10vw, 10rem));
+  overflow: auto;
+}
+.theme-split .forecast-grid,
+.theme-split .extremes-grid,
+.theme-split .interest-grid,
+.theme-split .other-grid {
+  grid-template-columns: repeat(auto-fit, minmax(clamp(8.5rem, 16vw, 13rem), 1fr));
+}
+.theme-split .forecast-grid strong,
+.theme-split .extremes-grid strong,
+.theme-split .interest-grid strong,
+.theme-split .other-grid strong {
+  font-size: clamp(1.6rem, 3.6vw, 3.2rem) !important;
+}
+
+/* Glass / minimal / poster / cinema: escala refinada */
+.theme-glass .forecast-grid,
+.theme-glass .extremes-grid,
+.theme-glass .interest-grid,
+.theme-glass .other-grid,
+.theme-minimal .forecast-grid,
+.theme-minimal .extremes-grid,
+.theme-minimal .interest-grid,
+.theme-minimal .other-grid,
+.theme-poster .forecast-grid,
+.theme-poster .extremes-grid,
+.theme-poster .interest-grid,
+.theme-poster .other-grid,
+.theme-cinema .forecast-grid,
+.theme-cinema .extremes-grid,
+.theme-cinema .interest-grid,
+.theme-cinema .other-grid {
+  grid-template-columns: repeat(auto-fit, minmax(clamp(8.5rem, 15vw, 13rem), 1fr));
+}
+.theme-poster .tv-card,
+.theme-cinema .tv-card,
+.theme-glass .tv-card,
+.theme-minimal .tv-card {
+  max-height: 74vh;
+  overflow: auto;
+}
+
+/* Vertical: todo debe encajar en pantalla estrecha */
+.theme-vertical .forecast-grid,
+.theme-vertical .extremes-grid,
+.theme-vertical .interest-grid,
+.theme-vertical .other-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+.theme-vertical .forecast-grid article,
+.theme-vertical .extremes-grid article,
+.theme-vertical .interest-grid article,
+.theme-vertical .other-grid article {
+  padding: 0.8rem;
+}
+.theme-vertical .forecast-grid strong,
+.theme-vertical .extremes-grid strong,
+.theme-vertical .interest-grid strong,
+.theme-vertical .other-grid strong {
+  font-size: clamp(1.35rem, 7vw, 2.2rem) !important;
+}
+.theme-vertical .day-icon {
+  font-size: clamp(1.9rem, 9vw, 3.4rem) !important;
+}
+
+/* Preview: evitar que el theme CNN parezca roto en miniatura */
+.preview-frame.theme-ticker .preview-card {
+  overflow: hidden;
+}
+.preview-frame.theme-ticker .forecast-grid article,
+.preview-frame.theme-ticker .extremes-grid article,
+.preview-frame.theme-ticker .other-grid article,
+.preview-frame.theme-ticker .interest-grid article {
+  grid-template-columns: minmax(0, 1.1fr) auto minmax(0, 0.8fr);
+  min-height: 2.4rem;
+  padding: 0.3rem 0.45rem;
+}
+.preview-frame.theme-ticker .forecast-grid article::before,
+.preview-frame.theme-ticker .extremes-grid article::before,
+.preview-frame.theme-ticker .other-grid article::before,
+.preview-frame.theme-ticker .interest-grid article::before {
+  width: 0.18rem;
+  margin-left: -0.45rem;
+}
+.preview-frame.theme-ticker .forecast-grid article > strong,
+.preview-frame.theme-ticker .extremes-grid article > span,
+.preview-frame.theme-ticker .other-grid article > span,
+.preview-frame.theme-ticker .interest-grid article > span {
+  font-size: clamp(0.85rem, 2.5vw, 1.25rem) !important;
+}
+.preview-frame.theme-ticker .forecast-grid .day-icon {
+  font-size: clamp(1rem, 3vw, 1.7rem) !important;
+}
+.preview-frame.theme-ticker .forecast-grid b,
+.preview-frame.theme-ticker .extremes-grid strong,
+.preview-frame.theme-ticker .other-grid strong,
+.preview-frame.theme-ticker .interest-grid strong {
+  font-size: clamp(0.95rem, 3vw, 1.45rem) !important;
+}
+.preview-frame.theme-ticker .forecast-grid small {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .theme-ticker .forecast-grid article,
+  .theme-ticker .extremes-grid article,
+  .theme-ticker .other-grid article,
+  .theme-ticker .interest-grid article {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .theme-ticker .forecast-grid .day-icon {
+    grid-column: 2;
+  }
+  .theme-ticker .forecast-grid b,
+  .theme-ticker .extremes-grid strong,
+  .theme-ticker .other-grid strong,
+  .theme-ticker .interest-grid strong,
+  .theme-ticker .extremes-grid small,
+  .theme-ticker .other-grid small {
+    grid-column: 2;
+  }
+  .theme-ticker .forecast-grid small {
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 620px) {
+  .theme-vertical .forecast-grid,
+  .theme-vertical .extremes-grid,
+  .theme-vertical .interest-grid,
+  .theme-vertical .other-grid,
+  .forecast-grid,
+  .extremes-grid,
+  .interest-grid,
+  .other-grid {
+    grid-template-columns: 1fr;
+  }
+  .theme-ticker .tv-card {
+    width: 100%;
+    max-height: 72vh;
+  }
+  .theme-ticker .forecast-grid article,
+  .theme-ticker .extremes-grid article,
+  .theme-ticker .other-grid article,
+  .theme-ticker .interest-grid article {
+    grid-template-columns: 1fr auto;
+    min-height: 3.5rem;
+  }
+}
