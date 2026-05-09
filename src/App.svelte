@@ -68,6 +68,9 @@
     past: WeatherDay[]
   }
 
+  const appBase = import.meta.env.BASE_URL.replace(/\/$/, '')
+  const homeHref = `${appBase || '/'}`
+
   const defaultSections: SectionConfig[] = [
     { id: 'current', type: 'current', title: 'Tiempo actual', enabled: true },
     { id: 'forecast', type: 'forecast', title: 'Previsión próximos días', enabled: true, days: 5 },
@@ -143,12 +146,11 @@
   onMount(() => {
     const params = new URLSearchParams(window.location.search)
     const encoded = params.get('config')
+    const cleanPath = window.location.pathname.replace(new RegExp(`^${appBase}`), '')
 
-    if (window.location.pathname.startsWith('/canal') && encoded) {
+    if (cleanPath.startsWith('/canal') && encoded) {
       const decoded = decodeConfig(encoded)
-      if (decoded) {
-        config = decoded
-      }
+      if (decoded) config = decoded
       viewMode = 'channel'
     }
 
@@ -182,7 +184,7 @@
 
   function buildChannelUrl(value: ChannelConfig) {
     if (typeof window === 'undefined') return ''
-    return `${window.location.origin}/canal?config=${encodeConfig(value)}`
+    return `${window.location.origin}${appBase}/canal?config=${encodeConfig(value)}`
   }
 
   async function searchMunicipalities(term: string, target: 'main' | 'other' = 'main') {
@@ -357,7 +359,8 @@
     return new Intl.DateTimeFormat('es-ES', { weekday: 'short', day: 'numeric', month: 'short' }).format(new Date(date))
   }
 
-  function formatTime(date: string) {
+  function formatTime(date?: string) {
+    if (!date) return '--:--'
     return new Intl.DateTimeFormat('es-ES', { hour: '2-digit', minute: '2-digit' }).format(new Date(date))
   }
 
@@ -417,7 +420,7 @@
 {:else}
   <div class="app-shell">
     <header class="site-header">
-      <a class="brand" href="/" aria-label="TiempoTV">
+      <a class="brand" href={homeHref} aria-label="TiempoTV">
         <span class="brand-mark">TV</span>
         <span>TiempoTV</span>
       </a>
