@@ -1,0 +1,756 @@
+/*
+  Themes visualmente diferenciados para TiempoTV.
+  Esta hoja se carga después de app.css y convierte los layouts existentes
+  en identidades gráficas radicalmente distintas.
+*/
+
+.tv-screen::after,
+.preview-frame::after,
+.mini-tv::after {
+  pointer-events: none;
+}
+
+.tv-screen .tv-background.with-image,
+.preview-frame .tv-background.with-image {
+  opacity: 1;
+}
+
+.tv-screen .tv-card,
+.preview-frame .preview-card {
+  isolation: isolate;
+}
+
+/* 1. Minimal central: pantalla premium, limpia, casi Apple TV */
+.theme-minimal {
+  --theme-accent: #ffffff;
+  background:
+    radial-gradient(circle at 50% 25%, rgb(255 255 255 / 0.16), transparent 32rem),
+    linear-gradient(135deg, #07111f, #111827 48%, #020617);
+}
+.theme-minimal .tv-background.with-image,
+.preview-frame.theme-minimal .tv-background.with-image {
+  filter: saturate(0.65) contrast(1.25) brightness(0.55);
+}
+.theme-minimal .tv-overlay {
+  place-items: center;
+  text-align: center;
+}
+.theme-minimal .tv-header {
+  justify-content: center;
+  border: 0;
+}
+.theme-minimal .tv-title-box {
+  align-items: center;
+}
+.theme-minimal .tv-header h1 {
+  font-weight: 950;
+  letter-spacing: -0.09em;
+  text-shadow: 0 18px 50px rgb(0 0 0 / 0.45);
+}
+.theme-minimal .section-kicker {
+  margin-inline: auto;
+  background: rgb(255 255 255 / 0.14);
+}
+.theme-minimal .tv-card {
+  width: min(86vw, 82rem);
+  border: 0;
+  border-radius: 3rem;
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.16), rgb(255 255 255 / 0.07));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.25), 0 40px 120px rgb(0 0 0 / 0.42);
+}
+.theme-minimal .current-layout {
+  justify-items: center;
+  grid-template-columns: 1fr;
+}
+.theme-minimal .big-icon {
+  opacity: 0.9;
+  filter: drop-shadow(0 22px 30px rgb(0 0 0 / 0.35));
+}
+.theme-minimal .current-layout h2 {
+  font-size: clamp(7rem, 20vw, 20rem);
+}
+.theme-minimal .live-pill,
+.theme-minimal .tv-footer {
+  display: none;
+}
+
+/* 2. Rótulo inferior izquierda: magazine de mañana */
+.theme-lower-left {
+  background:
+    linear-gradient(120deg, rgb(255 175 82 / 0.32), transparent 45%),
+    linear-gradient(180deg, #082f49, #111827);
+}
+.theme-lower-left .tv-background.with-image,
+.preview-frame.theme-lower-left .tv-background.with-image {
+  filter: saturate(1.25) contrast(1.1) brightness(0.82);
+}
+.theme-lower-left .tv-overlay {
+  grid-template-rows: 1fr auto;
+  padding: clamp(1.25rem, 4vw, 4rem);
+}
+.theme-lower-left .tv-card {
+  max-width: min(70vw, 72rem);
+  margin-left: auto;
+  align-self: center;
+  border-radius: 0.75rem;
+  background: rgb(255 255 255 / 0.82);
+  color: #082f49;
+  box-shadow: 0 28px 90px rgb(0 0 0 / 0.28);
+}
+.theme-lower-left .tv-card .section-kicker {
+  background: #e11d48;
+  color: #fff;
+  border-radius: 0;
+}
+.theme-lower-left .tv-title-box {
+  position: relative;
+  max-width: 46rem;
+  border-radius: 0.35rem;
+  border-left: 0.75rem solid #e11d48;
+  background: rgb(255 255 255 / 0.9);
+  color: #0f172a;
+  padding: clamp(1rem, 2vw, 1.65rem) clamp(1rem, 3vw, 2.25rem);
+  box-shadow: 0 18px 50px rgb(0 0 0 / 0.24);
+}
+.theme-lower-left .tv-header h1 {
+  font-size: clamp(2.4rem, 5vw, 5.4rem);
+}
+.theme-lower-left .tv-title-box .eyebrow {
+  background: transparent;
+  color: #e11d48;
+  padding: 0;
+}
+.theme-lower-left .tv-footer {
+  position: absolute;
+  top: clamp(1rem, 4vw, 4rem);
+  left: clamp(1rem, 4vw, 4rem);
+  color: #fff;
+  text-shadow: 0 2px 12px rgb(0 0 0 / 0.5);
+}
+
+/* 3. Split: informativo europeo con panel lateral */
+.theme-split {
+  background:
+    linear-gradient(90deg, #111827 0 34%, #e5e7eb 34% 100%);
+  color: #111827;
+}
+.theme-split .tv-background.with-image,
+.preview-frame.theme-split .tv-background.with-image {
+  opacity: 0.18;
+  filter: grayscale(0.8) contrast(1.1);
+}
+.theme-split .tv-overlay {
+  grid-template-columns: minmax(18rem, 0.38fr) 1fr;
+  grid-template-rows: 1fr auto;
+  gap: 0;
+  padding: 0;
+}
+.theme-split .tv-header {
+  grid-row: 1 / 3;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  background: #0f172a;
+  color: white;
+  padding: clamp(2rem, 5vw, 5rem);
+}
+.theme-split .tv-title-box::before {
+  content: 'METEO';
+  display: inline-grid;
+  place-items: center;
+  width: 5rem;
+  height: 5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0.4rem;
+  background: #2563eb;
+  color: white;
+  font-weight: 950;
+  letter-spacing: -0.07em;
+}
+.theme-split .tv-header h1 {
+  font-size: clamp(2.5rem, 4.6vw, 5.4rem);
+  line-height: 0.95;
+}
+.theme-split .tv-card {
+  margin: clamp(2rem, 5vw, 5rem);
+  align-self: center;
+  color: #0f172a;
+  background: rgb(255 255 255 / 0.92);
+  border: 0;
+  border-radius: 0;
+  box-shadow: 0 20px 70px rgb(15 23 42 / 0.18);
+}
+.theme-split .section-kicker {
+  background: #0f172a;
+  color: #fff;
+  border-radius: 0;
+}
+.theme-split .tv-footer {
+  grid-column: 2;
+  padding: 0 clamp(2rem, 5vw, 5rem) clamp(1.5rem, 3vw, 3rem);
+  color: #334155;
+}
+.theme-split .generated-by {
+  color: #334155;
+  background: transparent;
+  border-color: rgb(15 23 42 / 0.14);
+}
+
+/* 4. Glass: app meteorológica moderna, neon suave */
+.theme-glass {
+  background:
+    radial-gradient(circle at 25% 20%, rgb(56 189 248 / 0.45), transparent 26rem),
+    radial-gradient(circle at 80% 70%, rgb(168 85 247 / 0.36), transparent 30rem),
+    #020617;
+}
+.theme-glass .tv-background.with-image,
+.preview-frame.theme-glass .tv-background.with-image {
+  filter: saturate(1.35) blur(1px) brightness(0.58);
+  transform: scale(1.02);
+}
+.theme-glass .tv-card,
+.theme-glass .tv-title-box,
+.theme-glass .live-pill {
+  border: 1px solid rgb(255 255 255 / 0.22);
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.22), rgb(255 255 255 / 0.08));
+  backdrop-filter: blur(24px) saturate(1.4);
+}
+.theme-glass .tv-header {
+  width: min(92%, 82rem);
+  justify-self: center;
+}
+.theme-glass .tv-title-box {
+  border-radius: 2rem;
+  padding: 1.1rem 1.5rem;
+}
+.theme-glass .tv-card {
+  width: min(92%, 82rem);
+  justify-self: center;
+  align-self: center;
+  border-radius: 3rem;
+}
+.theme-glass .forecast-grid article,
+.theme-glass .extremes-grid article,
+.theme-glass .interest-grid article,
+.theme-glass .other-grid article {
+  background: rgb(255 255 255 / 0.16);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.16);
+}
+.theme-glass .current-layout h2 {
+  text-shadow: 0 0 55px rgb(56 189 248 / 0.42);
+}
+
+/* 5. Ticker: inspirado en CNN World Weather */
+.theme-ticker {
+  background: #f8fafc;
+  color: #0f172a;
+}
+.theme-ticker .tv-background.with-image,
+.preview-frame.theme-ticker .tv-background.with-image {
+  filter: blur(2px) saturate(0.75) brightness(1.25);
+  opacity: 0.45;
+}
+.theme-ticker .tv-overlay {
+  grid-template-rows: auto 1fr auto;
+  gap: clamp(1rem, 2vw, 2rem);
+  padding: clamp(1.25rem, 3vw, 3rem);
+}
+.theme-ticker .tv-header {
+  position: relative;
+  justify-content: flex-start;
+  gap: 1.4rem;
+  min-height: 6.4rem;
+  background: rgb(255 255 255 / 0.92);
+  color: #0f172a;
+  border-radius: 0.25rem;
+  padding: 1rem 1.4rem;
+  box-shadow: 0 14px 36px rgb(15 23 42 / 0.16);
+}
+.theme-ticker .tv-title-box {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+.theme-ticker .tv-title-box::before {
+  content: 'TV';
+  display: inline-grid;
+  place-items: center;
+  width: 4.4rem;
+  height: 4.4rem;
+  background: #cc0000;
+  color: white;
+  font-size: 1.7rem;
+  font-weight: 950;
+  letter-spacing: -0.09em;
+  box-shadow: inset 0 0 0 0.35rem rgb(255 255 255 / 0.14);
+}
+.theme-ticker .tv-title-box .eyebrow {
+  display: none;
+}
+.theme-ticker .tv-header h1 {
+  font-size: clamp(2rem, 4vw, 4.2rem);
+  letter-spacing: -0.045em;
+}
+.theme-ticker .tv-header h1::after {
+  content: 'Forecast highs/lows';
+  display: inline-block;
+  margin-left: 1rem;
+  padding-left: 1rem;
+  border-left: 0.18rem solid #b91c1c;
+  font-size: 0.62em;
+  letter-spacing: -0.04em;
+  font-weight: 850;
+}
+.theme-ticker .live-pill {
+  margin-left: auto;
+  border-radius: 0;
+  background: #0f172a;
+  color: white;
+}
+.theme-ticker .tv-card {
+  align-self: center;
+  width: min(84vw, 82rem);
+  justify-self: center;
+  border: 0;
+  border-left: 0.55rem solid #b91c1c;
+  border-radius: 0;
+  background: rgb(255 255 255 / 0.82);
+  color: #0f172a;
+  box-shadow: 0 22px 60px rgb(15 23 42 / 0.22);
+}
+.theme-ticker .section-kicker {
+  border-radius: 0;
+  background: #b91c1c;
+  color: white;
+}
+.theme-ticker .forecast-grid,
+.theme-ticker .extremes-grid,
+.theme-ticker .other-grid {
+  gap: 0;
+}
+.theme-ticker .forecast-grid article,
+.theme-ticker .extremes-grid article,
+.theme-ticker .other-grid article {
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  border: 0;
+  border-bottom: 1px solid rgb(15 23 42 / 0.18);
+  border-radius: 0;
+  background: rgb(255 255 255 / 0.64);
+  color: #0f172a;
+}
+.theme-ticker .forecast-grid strong,
+.theme-ticker .extremes-grid strong,
+.theme-ticker .other-grid strong {
+  font-size: clamp(1.8rem, 4vw, 4rem);
+}
+.theme-ticker .tv-footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0.8rem clamp(1.25rem, 3vw, 3rem);
+  background: #0f172a;
+  color: white;
+}
+.theme-ticker .generated-by {
+  bottom: 0.8rem;
+  background: #b91c1c;
+  color: white;
+  border: 0;
+}
+
+/* 6. Poster: cartel editorial con temperatura gigante */
+.theme-poster {
+  background: #111827;
+}
+.theme-poster .tv-background.with-image,
+.preview-frame.theme-poster .tv-background.with-image {
+  filter: saturate(1.2) contrast(1.25) brightness(0.75);
+}
+.theme-poster .tv-overlay {
+  place-items: end start;
+  grid-template-rows: auto 1fr auto;
+}
+.theme-poster .tv-header {
+  width: min(100%, 54rem);
+  flex-direction: column;
+  align-items: flex-start;
+  z-index: 2;
+}
+.theme-poster .tv-header h1 {
+  font-size: clamp(3.4rem, 9vw, 9rem);
+  text-transform: uppercase;
+  line-height: 0.82;
+  letter-spacing: -0.09em;
+}
+.theme-poster .tv-title-box .eyebrow,
+.theme-poster .section-kicker {
+  border-radius: 0;
+  background: #f59e0b;
+  color: #111827;
+}
+.theme-poster .tv-card {
+  width: min(100%, 52rem);
+  min-height: 62vh;
+  align-content: end;
+  border: 0;
+  border-radius: 0;
+  background: linear-gradient(0deg, rgb(0 0 0 / 0.72), rgb(0 0 0 / 0.14));
+  box-shadow: none;
+}
+.theme-poster .current-layout {
+  grid-template-columns: 1fr;
+}
+.theme-poster .current-layout h2 {
+  font-size: clamp(8rem, 22vw, 22rem);
+  letter-spacing: -0.14em;
+}
+.theme-poster .weather-stats span,
+.theme-poster .forecast-grid article,
+.theme-poster .extremes-grid article,
+.theme-poster .interest-grid article {
+  border-radius: 0;
+  background: rgb(0 0 0 / 0.34);
+}
+
+/* 7. Dashboard: inspirado en Weather TV azul */
+.theme-dashboard {
+  background:
+    linear-gradient(180deg, #38bdf8, #0284c7 48%, #075985);
+}
+.theme-dashboard .tv-background.with-image,
+.preview-frame.theme-dashboard .tv-background.with-image {
+  opacity: 0.2;
+  filter: hue-rotate(165deg) saturate(1.4) brightness(1.25);
+}
+.theme-dashboard .tv-overlay {
+  grid-template-rows: auto auto 1fr;
+  gap: 0;
+  padding: 0;
+}
+.theme-dashboard .tv-header {
+  min-height: 7.5rem;
+  padding: 1.2rem clamp(1.5rem, 4vw, 4rem);
+  background: linear-gradient(90deg, rgb(12 74 110 / 0.76), rgb(14 165 233 / 0.52));
+  border-bottom: 1px solid rgb(255 255 255 / 0.22);
+}
+.theme-dashboard .tv-title-box {
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 1rem;
+}
+.theme-dashboard .tv-title-box::before {
+  content: '⌕';
+  display: grid;
+  place-items: center;
+  width: 3.8rem;
+  height: 3.8rem;
+  border-radius: 50%;
+  background: rgb(7 89 133 / 0.65);
+  color: #e0f2fe;
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+.theme-dashboard .tv-header h1 {
+  font-size: clamp(1.8rem, 3.5vw, 4rem);
+}
+.theme-dashboard .tv-card {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: clamp(1rem, 3vw, 2rem);
+}
+.theme-dashboard .current-layout {
+  grid-template-columns: 0.42fr 1fr;
+  background: rgb(2 132 199 / 0.32);
+  border-bottom: 0.35rem solid #67e8f9;
+}
+.theme-dashboard .weather-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  margin: 0;
+  padding: 1rem clamp(1rem, 3vw, 2rem);
+  background: rgb(3 105 161 / 0.72);
+}
+.theme-dashboard .weather-stats span {
+  display: grid;
+  place-items: center;
+  min-height: 5rem;
+  border: 0;
+  border-radius: 0;
+  background: rgb(255 255 255 / 0.1);
+}
+.theme-dashboard .forecast-grid,
+.theme-dashboard .extremes-grid,
+.theme-dashboard .interest-grid,
+.theme-dashboard .other-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 0.35rem;
+}
+.theme-dashboard .forecast-grid article,
+.theme-dashboard .extremes-grid article,
+.theme-dashboard .interest-grid article,
+.theme-dashboard .other-grid article {
+  min-height: 12rem;
+  border: 0;
+  border-radius: 0;
+  background: linear-gradient(180deg, #0ea5e9, #075985);
+  box-shadow: inset 0 -0.35rem 0 #22d3ee;
+}
+.theme-dashboard .tv-footer {
+  padding: 0.8rem clamp(1.5rem, 4vw, 4rem);
+  background: #075985;
+  color: #e0f2fe;
+}
+.theme-dashboard .generated-by {
+  background: rgb(3 105 161 / 0.85);
+  color: #e0f2fe;
+}
+
+/* 8. Cinema: película panorámica */
+.theme-cinema {
+  background: #050505;
+}
+.theme-cinema .tv-background.with-image,
+.preview-frame.theme-cinema .tv-background.with-image {
+  filter: contrast(1.2) saturate(0.8) brightness(0.6);
+}
+.theme-cinema::before,
+.preview-frame.theme-cinema::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, #000 0 8%, transparent 18% 82%, #000 93% 100%),
+    radial-gradient(circle at 50% 50%, transparent 40%, rgb(0 0 0 / 0.58));
+  pointer-events: none;
+}
+.theme-cinema .tv-overlay,
+.preview-frame.theme-cinema .preview-content {
+  z-index: 2;
+}
+.theme-cinema .tv-header {
+  position: absolute;
+  top: clamp(2rem, 5vw, 5rem);
+  left: clamp(2rem, 5vw, 5rem);
+  right: clamp(2rem, 5vw, 5rem);
+}
+.theme-cinema .tv-title-box .eyebrow {
+  border-radius: 0;
+  background: transparent;
+  color: #fbbf24;
+  padding: 0;
+}
+.theme-cinema .tv-header h1 {
+  font-size: clamp(2rem, 4.4vw, 5.2rem);
+  text-transform: uppercase;
+}
+.theme-cinema .tv-card {
+  align-self: end;
+  margin-inline: calc(clamp(1.25rem, 4vw, 4rem) * -1);
+  margin-bottom: 5vh;
+  border: 0;
+  border-radius: 0;
+  background: linear-gradient(90deg, rgb(0 0 0 / 0.82), rgb(0 0 0 / 0.28));
+  box-shadow: none;
+}
+.theme-cinema .section-kicker {
+  display: none;
+}
+.theme-cinema .tv-footer {
+  display: none;
+}
+.theme-cinema .generated-by {
+  top: clamp(1rem, 2vw, 2rem);
+  bottom: auto;
+}
+
+/* 9. Vertical: social/reel */
+.theme-vertical {
+  background: #030712;
+}
+.theme-vertical .tv-background.with-image,
+.preview-frame.theme-vertical .tv-background.with-image {
+  filter: saturate(1.5) brightness(0.7);
+}
+.theme-vertical .tv-overlay {
+  width: min(100%, 34rem);
+  margin-inline: auto;
+  grid-template-rows: auto 1fr auto;
+  padding: 1rem;
+}
+.theme-vertical .tv-header {
+  flex-direction: column;
+  align-items: flex-start;
+}
+.theme-vertical .tv-title-box {
+  width: 100%;
+  border-radius: 1.8rem;
+  padding: 1.1rem;
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.18), rgb(255 255 255 / 0.06));
+}
+.theme-vertical .tv-header h1 {
+  font-size: clamp(2.5rem, 10vw, 5.4rem);
+}
+.theme-vertical .tv-card {
+  border-radius: 2rem;
+  background: rgb(0 0 0 / 0.45);
+}
+.theme-vertical .current-layout {
+  grid-template-columns: 1fr;
+}
+.theme-vertical .current-layout h2 {
+  font-size: clamp(7rem, 26vw, 13rem);
+}
+.theme-vertical .forecast-grid,
+.theme-vertical .extremes-grid,
+.theme-vertical .interest-grid,
+.theme-vertical .other-grid {
+  grid-template-columns: 1fr 1fr;
+}
+.theme-vertical .generated-by {
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+/* 10. Cards: mosaico de aeropuerto / panel público */
+.theme-cards {
+  background: #e5e7eb;
+  color: #111827;
+}
+.theme-cards .tv-background.with-image,
+.preview-frame.theme-cards .tv-background.with-image {
+  opacity: 0.12;
+  filter: grayscale(1) contrast(1.35);
+}
+.theme-cards .tv-overlay {
+  grid-template-rows: auto 1fr auto;
+  gap: 1rem;
+  padding: clamp(1rem, 3vw, 3rem);
+}
+.theme-cards .tv-header {
+  background: #111827;
+  color: white;
+  padding: 1rem 1.3rem;
+  border-radius: 0;
+}
+.theme-cards .tv-title-box::before {
+  content: 'INFO';
+  margin-bottom: 0.4rem;
+  color: #38bdf8;
+  font-size: 0.85rem;
+  font-weight: 950;
+  letter-spacing: 0.18em;
+}
+.theme-cards .tv-header h1 {
+  font-size: clamp(1.8rem, 4vw, 4.5rem);
+}
+.theme-cards .live-pill {
+  border-radius: 0;
+  background: #38bdf8;
+  color: #0f172a;
+}
+.theme-cards .tv-card {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #111827;
+  box-shadow: none;
+  padding: 0;
+}
+.theme-cards .section-kicker {
+  border-radius: 0;
+  background: #111827;
+  color: white;
+}
+.theme-cards .forecast-grid,
+.theme-cards .extremes-grid,
+.theme-cards .interest-grid,
+.theme-cards .other-grid {
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 0.65rem;
+}
+.theme-cards .forecast-grid article,
+.theme-cards .extremes-grid article,
+.theme-cards .interest-grid article,
+.theme-cards .other-grid article {
+  min-height: 12rem;
+  align-content: center;
+  text-align: center;
+  border-radius: 0;
+  border: 0;
+  background: white;
+  color: #111827;
+  box-shadow: 0 1px 0 rgb(15 23 42 / 0.14);
+}
+.theme-cards .current-layout {
+  min-height: 58vh;
+  grid-template-columns: 0.6fr 1fr;
+  background: white;
+  padding: clamp(1rem, 4vw, 4rem);
+}
+.theme-cards .current-layout h2 {
+  color: #0f172a;
+}
+.theme-cards .tv-footer {
+  color: #111827;
+}
+.theme-cards .generated-by {
+  background: #111827;
+  color: white;
+  border-radius: 0;
+}
+
+/* Previews pequeñas: mantener la personalidad sin romper el tamaño */
+.preview-frame.theme-ticker .preview-title-box::before,
+.preview-frame.theme-dashboard .preview-title-box::before,
+.preview-frame.theme-split .preview-title-box::before,
+.preview-frame.theme-cards .preview-title-box::before {
+  transform: scale(0.55);
+  transform-origin: left center;
+}
+.preview-frame.theme-ticker .preview-title-box,
+.preview-frame.theme-dashboard .preview-title-box,
+.preview-frame.theme-split .preview-title-box,
+.preview-frame.theme-cards .preview-title-box {
+  gap: 0.4rem;
+}
+.preview-frame.theme-ticker .preview-title-box strong::after {
+  content: ' | Highs/lows';
+  font-weight: 800;
+}
+.preview-frame.theme-dashboard .preview-content {
+  background: linear-gradient(180deg, rgb(14 165 233 / 0.25), rgb(7 89 133 / 0.32));
+}
+.preview-frame.theme-cards .preview-card,
+.preview-frame.theme-ticker .preview-card,
+.preview-frame.theme-split .preview-card {
+  color: #0f172a;
+}
+
+@media (max-width: 900px) {
+  .theme-split .tv-overlay {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+  }
+  .theme-split .tv-header {
+    grid-row: auto;
+  }
+  .theme-ticker .tv-header h1::after {
+    display: block;
+    margin: 0.35rem 0 0;
+    padding: 0;
+    border: 0;
+  }
+  .theme-dashboard .current-layout,
+  .theme-cards .current-layout {
+    grid-template-columns: 1fr;
+  }
+}
