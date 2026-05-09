@@ -1,0 +1,429 @@
+/* Pulido final de televisión: iconos OpenWeather, rueda de avance y layouts robustos. */
+
+.weather-icon-img {
+  display: block;
+  width: clamp(2.8rem, 5.6vw, 5.4rem);
+  height: clamp(2.8rem, 5.6vw, 5.4rem);
+  object-fit: contain;
+  filter: drop-shadow(0 0.45rem 0.75rem rgb(0 0 0 / 0.22));
+}
+
+.weather-icon-img-big {
+  width: clamp(7rem, 16vw, 15rem);
+  height: clamp(7rem, 16vw, 15rem);
+}
+
+.weather-icon-holder,
+.day-icon {
+  display: grid;
+  place-items: center;
+  line-height: 1;
+}
+
+.mini-tv-card .weather-icon-img {
+  width: 4.8rem;
+  height: 4.8rem;
+  margin-inline: auto;
+}
+
+.section-timer-ring {
+  --timer-size: clamp(2.1rem, 3.5vw, 3.25rem);
+  position: absolute;
+  right: clamp(1rem, 2.4vw, 2rem);
+  top: clamp(1rem, 2.4vw, 2rem);
+  z-index: 20;
+  width: var(--timer-size);
+  height: var(--timer-size);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgb(0 0 0 / 0.38) 0 48%, transparent 50%),
+    conic-gradient(currentColor 0turn, currentColor 0turn, rgb(255 255 255 / 0.22) 0turn 1turn);
+  color: currentColor;
+  box-shadow: 0 0.8rem 2rem rgb(0 0 0 / 0.24), inset 0 0 0 1px rgb(255 255 255 / 0.18);
+  opacity: 0.88;
+  animation: timer-ring-fill var(--timer-duration, 12s) linear both;
+}
+
+.section-timer-ring::after {
+  content: '';
+  position: absolute;
+  inset: 28%;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--channel-card, #0f172a) 85%, transparent);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.12);
+}
+
+@keyframes timer-ring-fill {
+  from {
+    background:
+      radial-gradient(circle, rgb(0 0 0 / 0.38) 0 48%, transparent 50%),
+      conic-gradient(currentColor 0turn, rgb(255 255 255 / 0.22) 0turn 1turn);
+  }
+  to {
+    background:
+      radial-gradient(circle, rgb(0 0 0 / 0.38) 0 48%, transparent 50%),
+      conic-gradient(currentColor 1turn, rgb(255 255 255 / 0.22) 1turn 1turn);
+  }
+}
+
+/* Base sólida para todos los themes */
+.tv-card,
+.tv-card * {
+  min-width: 0;
+}
+.tv-card {
+  max-height: 76vh;
+  overflow: hidden;
+}
+.forecast-grid,
+.extremes-grid,
+.interest-grid,
+.other-grid {
+  align-items: stretch;
+}
+.forecast-grid article,
+.extremes-grid article,
+.interest-grid article,
+.other-grid article {
+  min-width: 0;
+  overflow: hidden;
+}
+.forecast-grid strong,
+.forecast-grid small,
+.forecast-grid b,
+.extremes-grid span,
+.extremes-grid strong,
+.extremes-grid small,
+.interest-grid span,
+.interest-grid strong {
+  overflow-wrap: anywhere;
+}
+
+/* CNN theme: reglas finales, con prioridad sobre capas previas */
+.theme-ticker .tv-overlay {
+  padding-bottom: clamp(3.25rem, 6vw, 5rem) !important;
+}
+.theme-ticker .tv-card.tv-content,
+.theme-ticker .tv-card {
+  width: min(94vw, 92rem) !important;
+  max-height: calc(100vh - clamp(12rem, 22vw, 18rem)) !important;
+  padding: clamp(0.8rem, 1.8vw, 1.4rem) !important;
+  overflow: hidden !important;
+  border-left-width: 0.45rem !important;
+}
+.theme-ticker .section-kicker {
+  width: fit-content;
+  margin: 0 0 clamp(0.55rem, 1vw, 0.8rem) 0 !important;
+  padding: 0.34rem 0.62rem !important;
+  font-size: clamp(0.68rem, 0.95vw, 0.85rem) !important;
+  line-height: 1 !important;
+  letter-spacing: 0.08em !important;
+}
+
+.theme-ticker .forecast-grid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 0 !important;
+  border-top: 0.18rem solid #b91c1c !important;
+  background: rgb(255 255 255 / 0.88) !important;
+}
+.theme-ticker .forecast-grid article {
+  display: grid !important;
+  grid-template-columns: minmax(8rem, 1.05fr) clamp(2.3rem, 4vw, 4rem) minmax(7rem, 1fr) minmax(7.4rem, 0.72fr) !important;
+  align-items: center !important;
+  gap: clamp(0.45rem, 1vw, 0.8rem) !important;
+  min-height: clamp(2.75rem, 6.25vh, 4.1rem) !important;
+  padding: clamp(0.22rem, 0.75vw, 0.45rem) clamp(0.55rem, 1vw, 0.9rem) !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgb(15 23 42 / 0.16) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: #06111f !important;
+}
+.theme-ticker .forecast-grid article::before {
+  content: none !important;
+}
+.theme-ticker .forecast-grid article > strong {
+  grid-column: 1 !important;
+  text-align: left !important;
+  justify-self: stretch !important;
+  color: #06111f !important;
+  font-size: clamp(0.98rem, 2vw, 1.95rem) !important;
+  line-height: 0.96 !important;
+  white-space: nowrap !important;
+}
+.theme-ticker .forecast-grid .day-icon {
+  grid-column: 2 !important;
+  grid-row: auto !important;
+  justify-self: center !important;
+}
+.theme-ticker .forecast-grid .weather-icon-img {
+  width: clamp(2.25rem, 4.5vw, 4.1rem) !important;
+  height: clamp(2.25rem, 4.5vw, 4.1rem) !important;
+  filter: drop-shadow(0 0.2rem 0.45rem rgb(0 0 0 / 0.16));
+}
+.theme-ticker .forecast-grid small {
+  grid-column: 3 !important;
+  display: block !important;
+  color: #334155 !important;
+  font-size: clamp(0.72rem, 1.15vw, 1rem) !important;
+  font-weight: 850 !important;
+  line-height: 1.05 !important;
+  text-align: left !important;
+  opacity: 1 !important;
+}
+.theme-ticker .forecast-grid b {
+  grid-column: 4 !important;
+  justify-self: end !important;
+  color: #b91c1c !important;
+  font-size: clamp(1.2rem, 2.7vw, 2.75rem) !important;
+  line-height: 0.95 !important;
+  white-space: nowrap !important;
+}
+
+.theme-ticker .extremes-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(7.2rem, 1fr)) !important;
+  gap: 0.45rem !important;
+  margin-top: 0.2rem !important;
+}
+.theme-ticker .extremes-grid article {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  align-content: center !important;
+  justify-items: center !important;
+  min-height: clamp(5.2rem, 11vh, 7.1rem) !important;
+  padding: 0.55rem 0.45rem !important;
+  border: 0 !important;
+  border-radius: 0.2rem !important;
+  background: rgb(255 255 255 / 0.86) !important;
+  color: #06111f !important;
+  text-align: center !important;
+}
+.theme-ticker .extremes-grid article::before {
+  content: none !important;
+}
+.theme-ticker .extremes-grid article > span {
+  grid-column: auto !important;
+  justify-self: center !important;
+  text-align: center !important;
+  font-size: clamp(0.7rem, 1.05vw, 0.95rem) !important;
+  line-height: 1 !important;
+  letter-spacing: -0.02em !important;
+}
+.theme-ticker .extremes-grid strong {
+  grid-column: auto !important;
+  justify-self: center !important;
+  color: #b91c1c !important;
+  font-size: clamp(1.75rem, 3.6vw, 3.35rem) !important;
+  line-height: 0.9 !important;
+}
+.theme-ticker .extremes-grid small {
+  grid-column: auto !important;
+  justify-self: center !important;
+  color: #334155 !important;
+  font-size: clamp(1rem, 2vw, 1.65rem) !important;
+  line-height: 1 !important;
+}
+
+.theme-ticker .interest-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)) !important;
+  gap: 0.55rem !important;
+}
+.theme-ticker .interest-grid article {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  align-content: center !important;
+  min-height: clamp(5.5rem, 12vh, 8rem) !important;
+  border: 0 !important;
+  border-radius: 0.25rem !important;
+  padding: 0.7rem !important;
+  background: rgb(255 255 255 / 0.86) !important;
+  color: #06111f !important;
+  text-align: center !important;
+}
+.theme-ticker .interest-grid article::before {
+  content: none !important;
+}
+.theme-ticker .interest-grid span {
+  grid-column: auto !important;
+  justify-self: center !important;
+  font-size: clamp(0.78rem, 1.2vw, 0.98rem) !important;
+  font-weight: 850 !important;
+  text-align: center !important;
+  color: #334155 !important;
+}
+.theme-ticker .interest-grid strong {
+  grid-column: auto !important;
+  justify-self: center !important;
+  color: #b91c1c !important;
+  font-size: clamp(1.45rem, 3.1vw, 3rem) !important;
+  line-height: 0.95 !important;
+  text-align: center !important;
+}
+
+.theme-ticker .current-layout {
+  grid-template-columns: minmax(8rem, 0.45fr) minmax(0, 1fr) !important;
+  gap: clamp(1rem, 2vw, 2rem) !important;
+}
+.theme-ticker .current-layout .weather-icon-img-big {
+  width: clamp(7rem, 14vw, 12rem) !important;
+  height: clamp(7rem, 14vw, 12rem) !important;
+}
+.theme-ticker .current-layout h2 {
+  font-size: clamp(4.5rem, 11vw, 10.5rem) !important;
+}
+
+/* Resto de themes: restricciones de seguridad para que nada desborde */
+.theme-dashboard .forecast-grid,
+.theme-dashboard .extremes-grid,
+.theme-dashboard .interest-grid,
+.theme-cards .forecast-grid,
+.theme-cards .extremes-grid,
+.theme-cards .interest-grid,
+.theme-glass .forecast-grid,
+.theme-glass .extremes-grid,
+.theme-glass .interest-grid,
+.theme-minimal .forecast-grid,
+.theme-minimal .extremes-grid,
+.theme-minimal .interest-grid,
+.theme-split .forecast-grid,
+.theme-split .extremes-grid,
+.theme-split .interest-grid,
+.theme-poster .forecast-grid,
+.theme-poster .extremes-grid,
+.theme-poster .interest-grid,
+.theme-cinema .forecast-grid,
+.theme-cinema .extremes-grid,
+.theme-cinema .interest-grid {
+  grid-template-columns: repeat(auto-fit, minmax(clamp(8rem, 15vw, 13rem), 1fr)) !important;
+  gap: clamp(0.45rem, 1vw, 0.85rem) !important;
+}
+
+.theme-dashboard .tv-card,
+.theme-cards .tv-card,
+.theme-glass .tv-card,
+.theme-minimal .tv-card,
+.theme-split .tv-card,
+.theme-poster .tv-card,
+.theme-cinema .tv-card,
+.theme-lower-left .tv-card,
+.theme-vertical .tv-card {
+  max-height: 76vh !important;
+  overflow: hidden !important;
+}
+
+.theme-dashboard .forecast-grid article,
+.theme-dashboard .extremes-grid article,
+.theme-dashboard .interest-grid article,
+.theme-cards .forecast-grid article,
+.theme-cards .extremes-grid article,
+.theme-cards .interest-grid article,
+.theme-glass .forecast-grid article,
+.theme-glass .extremes-grid article,
+.theme-glass .interest-grid article,
+.theme-minimal .forecast-grid article,
+.theme-minimal .extremes-grid article,
+.theme-minimal .interest-grid article,
+.theme-split .forecast-grid article,
+.theme-split .extremes-grid article,
+.theme-split .interest-grid article,
+.theme-poster .forecast-grid article,
+.theme-poster .extremes-grid article,
+.theme-poster .interest-grid article,
+.theme-cinema .forecast-grid article,
+.theme-cinema .extremes-grid article,
+.theme-cinema .interest-grid article {
+  min-height: clamp(6.2rem, 13vh, 10rem) !important;
+  padding: clamp(0.6rem, 1.4vw, 1.05rem) !important;
+}
+
+.theme-dashboard .weather-icon-img,
+.theme-cards .weather-icon-img,
+.theme-glass .weather-icon-img,
+.theme-minimal .weather-icon-img,
+.theme-split .weather-icon-img,
+.theme-poster .weather-icon-img,
+.theme-cinema .weather-icon-img {
+  width: clamp(2.6rem, 5vw, 4.6rem);
+  height: clamp(2.6rem, 5vw, 4.6rem);
+}
+
+.theme-vertical .forecast-grid,
+.theme-vertical .extremes-grid,
+.theme-vertical .interest-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 0.55rem !important;
+}
+.theme-vertical .forecast-grid article,
+.theme-vertical .extremes-grid article,
+.theme-vertical .interest-grid article {
+  min-height: 6rem !important;
+  padding: 0.55rem !important;
+}
+.theme-vertical .weather-icon-img {
+  width: 2.7rem;
+  height: 2.7rem;
+}
+
+/* Preview compacta */
+.preview-frame .weather-icon-img {
+  width: 1.9rem;
+  height: 1.9rem;
+}
+.preview-frame.theme-ticker .forecast-grid article {
+  grid-template-columns: minmax(3.5rem, 1fr) 1.65rem minmax(3.6rem, 1fr) auto !important;
+  gap: 0.28rem !important;
+  min-height: 1.85rem !important;
+  padding: 0.16rem 0.28rem !important;
+}
+.preview-frame.theme-ticker .forecast-grid .weather-icon-img {
+  width: 1.45rem !important;
+  height: 1.45rem !important;
+}
+.preview-frame.theme-ticker .forecast-grid small {
+  display: block !important;
+  font-size: 0.52rem !important;
+}
+.preview-frame.theme-ticker .forecast-grid b {
+  font-size: 0.78rem !important;
+}
+.preview-frame.theme-ticker .interest-grid,
+.preview-frame.theme-ticker .extremes-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 0.28rem !important;
+}
+.preview-frame.theme-ticker .interest-grid article,
+.preview-frame.theme-ticker .extremes-grid article {
+  min-height: 2.7rem !important;
+  padding: 0.25rem !important;
+}
+.preview-frame.theme-ticker .interest-grid strong,
+.preview-frame.theme-ticker .extremes-grid strong {
+  font-size: 0.95rem !important;
+}
+
+@media (max-width: 760px) {
+  .theme-ticker .forecast-grid article {
+    grid-template-columns: 1fr 2.8rem auto !important;
+  }
+  .theme-ticker .forecast-grid small {
+    display: none !important;
+  }
+  .theme-ticker .forecast-grid b {
+    grid-column: 3 !important;
+  }
+  .theme-ticker .interest-grid,
+  .theme-ticker .extremes-grid,
+  .forecast-grid,
+  .extremes-grid,
+  .interest-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .theme-vertical .forecast-grid,
+  .theme-vertical .extremes-grid,
+  .theme-vertical .interest-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
