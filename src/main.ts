@@ -8,7 +8,8 @@ import './configurator-v2.css'
 import './tv-final-polish.css'
 import './timer-ring-fix.css'
 import './progress-bar-fix.css'
-import App from './AppOpenWeather.svelte'
+import './expanded-sections.css'
+import App from './AppWeatherExpanded.svelte'
 
 const app = mount(App, {
   target: document.getElementById('app')!,
