@@ -9,7 +9,7 @@ import './tv-final-polish.css'
 import './timer-ring-fix.css'
 import './progress-bar-fix.css'
 import './expanded-sections.css'
-import App from './AppWeatherResilient.svelte'
+import App from './AppRouter.svelte'
 
 const app = mount(App, {
   target: document.getElementById('app')!,
